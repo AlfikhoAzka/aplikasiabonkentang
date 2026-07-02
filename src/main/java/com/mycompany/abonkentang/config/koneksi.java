@@ -6,7 +6,7 @@ package com.mycompany.abonkentang.config;
 
 /**
  *
- * @author Alfikho Azka
+ * @author Kelompok 6
  */
 public class koneksi {
     

@@ -6,7 +6,7 @@ package com.mycompany.abonkentang.controller;
 
 /**
  *
- * @author Alfikho Azka
+ * @author Bintang Aziz
  */
 public class TransaksiController {
     

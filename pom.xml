@@ -20,15 +20,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-<<<<<<< HEAD
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE290</version>
-=======
-            <groupId>unknown.binary</groupId>
-            <artifactId>AbsoluteLayout</artifactId>
-            <version>SNAPSHOT</version>
->>>>>>> main
         </dependency>
     </dependencies>
     <properties>

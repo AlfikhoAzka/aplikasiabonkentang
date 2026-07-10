@@ -28,21 +28,134 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mnuMasterData = new javax.swing.JMenu();
+        mnuBahanBaku = new javax.swing.JMenuItem();
+        mnuProduk = new javax.swing.JMenuItem();
+        mnuTransaksi = new javax.swing.JMenu();
+        mnuProduksi = new javax.swing.JMenuItem();
+        mnuPenjualan = new javax.swing.JMenuItem();
+        mnuStok = new javax.swing.JMenu();
+        mnuDataStok = new javax.swing.JMenuItem();
+        mnuLaporan = new javax.swing.JMenu();
+        mnuLaporanProduksi = new javax.swing.JMenuItem();
+        mnuLaporanPenjualan = new javax.swing.JMenuItem();
+        mnuLogout = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        mnuMasterData.setText("Master Data");
+
+        mnuBahanBaku.setText("Bahan Baku");
+        mnuBahanBaku.addActionListener(this::mnuBahanBakuActionPerformed);
+        mnuMasterData.add(mnuBahanBaku);
+
+        mnuProduk.setText("Produk");
+        mnuProduk.setToolTipText("");
+        mnuProduk.addActionListener(this::mnuProdukActionPerformed);
+        mnuMasterData.add(mnuProduk);
+
+        jMenuBar1.add(mnuMasterData);
+
+        mnuTransaksi.setText("Transaksi");
+
+        mnuProduksi.setText("Produksi");
+        mnuProduksi.addActionListener(this::mnuProduksiActionPerformed);
+        mnuTransaksi.add(mnuProduksi);
+
+        mnuPenjualan.setText("Penjualan");
+        mnuPenjualan.setToolTipText("");
+        mnuPenjualan.addActionListener(this::mnuPenjualanActionPerformed);
+        mnuTransaksi.add(mnuPenjualan);
+
+        jMenuBar1.add(mnuTransaksi);
+
+        mnuStok.setText("Stok");
+
+        mnuDataStok.setText("Data Stok");
+        mnuDataStok.setToolTipText("");
+        mnuDataStok.addActionListener(this::mnuDataStokActionPerformed);
+        mnuStok.add(mnuDataStok);
+
+        jMenuBar1.add(mnuStok);
+
+        mnuLaporan.setText("Laporan");
+
+        mnuLaporanProduksi.setText("Laporan Produksi");
+        mnuLaporanProduksi.addActionListener(this::mnuLaporanProduksiActionPerformed);
+        mnuLaporan.add(mnuLaporanProduksi);
+
+        mnuLaporanPenjualan.setText("Laporan Penjualan");
+        mnuLaporanPenjualan.addActionListener(this::mnuLaporanPenjualanActionPerformed);
+        mnuLaporan.add(mnuLaporanPenjualan);
+
+        jMenuBar1.add(mnuLaporan);
+
+        mnuLogout.setText("Logout");
+        mnuLogout.addActionListener(this::mnuLogoutActionPerformed);
+        jMenuBar1.add(mnuLogout);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 970, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 578, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mnuBahanBakuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBahanBakuActionPerformed
+        // TODO add your handling code here:
+        new BahanBakuFrame().setVisible(true);
+    }//GEN-LAST:event_mnuBahanBakuActionPerformed
+
+    private void mnuProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdukActionPerformed
+        // TODO add your handling code here:
+        new ProdukFrame().setVisible(true);
+    }//GEN-LAST:event_mnuProdukActionPerformed
+
+    private void mnuProduksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProduksiActionPerformed
+        // TODO add your handling code here:
+        new ProduksiFrame().setVisible(true);
+    }//GEN-LAST:event_mnuProduksiActionPerformed
+
+    private void mnuPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPenjualanActionPerformed
+        // TODO add your handling code here:
+        new TransaksiFrame().setVisible(true);
+    }//GEN-LAST:event_mnuPenjualanActionPerformed
+
+    private void mnuDataStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDataStokActionPerformed
+        // TODO add your handling code here:
+        new StokFrame().setVisible(true);
+    }//GEN-LAST:event_mnuDataStokActionPerformed
+
+    private void mnuLaporanProduksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLaporanProduksiActionPerformed
+        // TODO add your handling code here:
+        new LaporanProduksiFrame().setVisible(true);
+    }//GEN-LAST:event_mnuLaporanProduksiActionPerformed
+
+    private void mnuLaporanPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLaporanPenjualanActionPerformed
+        // TODO add your handling code here:
+        new LaporanPenjualanFrame().setVisible(true);
+    }//GEN-LAST:event_mnuLaporanPenjualanActionPerformed
+
+    private void mnuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLogoutActionPerformed
+        // TODO add your handling code here:
+        int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(
+                this, "Yakin ingin logout?", "Konfirmasi Logout",
+                javax.swing.JOptionPane.YES_NO_OPTION);
+        if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+            new LoginFrame().setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_mnuLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +183,18 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mnuBahanBaku;
+    private javax.swing.JMenuItem mnuDataStok;
+    private javax.swing.JMenu mnuLaporan;
+    private javax.swing.JMenuItem mnuLaporanPenjualan;
+    private javax.swing.JMenuItem mnuLaporanProduksi;
+    private javax.swing.JMenu mnuLogout;
+    private javax.swing.JMenu mnuMasterData;
+    private javax.swing.JMenuItem mnuPenjualan;
+    private javax.swing.JMenuItem mnuProduk;
+    private javax.swing.JMenuItem mnuProduksi;
+    private javax.swing.JMenu mnuStok;
+    private javax.swing.JMenu mnuTransaksi;
     // End of variables declaration//GEN-END:variables
 }

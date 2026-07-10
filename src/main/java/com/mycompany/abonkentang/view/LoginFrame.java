@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.abonkentang.view;
+import com.mycompany.abonkentang.controller.LoginController;
+import com.mycompany.abonkentang.model.User;
 
 /**
  *
@@ -11,6 +13,7 @@ package com.mycompany.abonkentang.view;
 public class LoginFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginFrame.class.getName());
+    private final LoginController controller = new LoginController();
 
     /**
      * Creates new form LoginFrame
@@ -176,11 +179,12 @@ public class LoginFrame extends javax.swing.JFrame {
             return;
         }
         
-        // Proses pencocokan data akun
-        if (username.equals("admin") && password.equals("12345")) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Login Berhasil!");
+        User user = controller.login(username, password);
+
+        if (user != null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Login Berhasil! Selamat datang, " + user.getNamaLengkap());
             new MainFrame().setVisible(true);
-            this.dispose(); 
+            this.dispose();
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Username atau Password Salah!");
         }

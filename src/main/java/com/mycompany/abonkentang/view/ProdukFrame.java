@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author kelompok 6
+ * @author Rassya Haikal Firdaus - 10125037, Alfikho Azka Dinova 10125107
  */
 public class ProdukFrame extends javax.swing.JFrame {
     
@@ -21,10 +21,24 @@ public class ProdukFrame extends javax.swing.JFrame {
     /**
      * Creates new form ProdukFrame
      */
+    private boolean isEditMode = false;
+    private String kodeProdukTerpilih;
     public ProdukFrame() {
         initComponents();
         controller = new ProdukController();
         tampilData(); 
+    }
+    
+    private void resetForm() {
+        txtKodeProduk.setText("");
+        txtNamaProduk.setText("");
+        txtKategori.setText("");
+        txtSatuan.setText("");
+        txtHargaJual.setText("");
+
+        isEditMode = false;
+        kodeProdukTerpilih = null;
+        btnSimpan.setText("Simpan");
     }
     
     private void tampilData() {
@@ -226,34 +240,99 @@ public class ProdukFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSatuanActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        System.out.println("Tombol Simpan ditekan");
-        
+        String kode = txtKodeProduk.getText().trim();
+        String nama = txtNamaProduk.getText().trim();
+        String kategori = txtKategori.getText().trim();
+        String satuan = txtSatuan.getText().trim();
+
+        if (kode.isEmpty() || nama.isEmpty() || kategori.isEmpty() || satuan.isEmpty()
+                || txtHargaJual.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Semua kolom wajib diisi!");
+            return;
+        }
+
+        double harga;
+        try {
+            harga = Double.parseDouble(txtHargaJual.getText().trim());
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Harga Jual harus berupa angka!");
+            return;
+        }
+
         Produk produk = new Produk();
+        produk.setKodeProduk(kode);
+        produk.setNamaProduk(nama);
+        produk.setKategori(kategori);
+        produk.setSatuan(satuan);
+        produk.setHargaJual(harga);
 
-    produk.setKodeProduk(txtKodeProduk.getText());
-    produk.setNamaProduk(txtNamaProduk.getText());
-    produk.setKategori(txtKategori.getText());
-    produk.setSatuan(txtSatuan.getText());
-    produk.setHargaJual(Double.parseDouble(txtHargaJual.getText()));
-    
-     if (controller.simpanProduk(produk)) {
-        System.out.println("Data berhasil disimpan");
-    } else {
-        System.out.println("Data gagal disimpan");
-    }
+        if (isEditMode) {
+            if (controller.updateProduk(kodeProdukTerpilih, produk)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil diubah");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengubah data");
+            }
+        } else {
+            if (controller.simpanProduk(produk)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan data");
+            }
+        }
 
+        tampilData();
+        resetForm();
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
+            int row = tblProduk.getSelectedRow();
+            if (row == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Pilih data yang ingin diedit terlebih dahulu");
+                return;
+            }
+
+            kodeProdukTerpilih = tblProduk.getValueAt(row, 0).toString();
+
+            txtKodeProduk.setText(kodeProdukTerpilih);
+            txtNamaProduk.setText(tblProduk.getValueAt(row, 1).toString());
+            txtKategori.setText(tblProduk.getValueAt(row, 2).toString());
+            txtSatuan.setText(tblProduk.getValueAt(row, 3).toString());
+            txtHargaJual.setText(tblProduk.getValueAt(row, 4).toString());
+
+            isEditMode = true;
+            btnSimpan.setText("Update");
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnBersihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBersihActionPerformed
         // TODO add your handling code here:
+        resetForm();
     }//GEN-LAST:event_btnBersihActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
+            int row = tblProduk.getSelectedRow();
+            if (row == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Pilih data yang ingin dihapus terlebih dahulu");
+                return;
+            }
+
+            int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(
+                    this, "Apakah Anda yakin ingin menghapus data ini?",
+                    "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+
+            if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+                String kode = tblProduk.getValueAt(row, 0).toString();
+
+                if (controller.hapusProduk(kode)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil dihapus");
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Gagal menghapus data");
+                }
+
+                tampilData();
+                resetForm();
+            }
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void txtKodeProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKodeProdukActionPerformed

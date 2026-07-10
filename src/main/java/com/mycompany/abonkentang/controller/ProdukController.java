@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 
 /**
  *
- * @author Kelompok 6
+ * @author Rassya Haikal Firdaus - 10125037, Alfikho Azka Dinova - 10125107
  */
 public class ProdukController {
     
@@ -59,4 +59,39 @@ public class ProdukController {
     }
 }  
 
-} 
+    public boolean updateProduk(String kodeProdukLama, Produk produk) {
+    try {
+        String sql = "UPDATE produk SET kode_produk=?, nama_produk=?, kategori=?, satuan=?, harga_jual=? "
+                + "WHERE kode_produk=?";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, produk.getKodeProduk());
+        ps.setString(2, produk.getNamaProduk());
+        ps.setString(3, produk.getKategori());
+        ps.setString(4, produk.getSatuan());
+        ps.setDouble(5, produk.getHargaJual());
+        ps.setString(6, kodeProdukLama);
+
+        int rows = ps.executeUpdate();
+        return rows > 0;
+    } catch (SQLException e) {
+        System.out.println("Gagal mengubah data : " + e.getMessage());
+        return false;
+    }
+}
+    
+    public boolean hapusProduk(String kodeProduk) {
+    try {
+        String sql = "DELETE FROM produk WHERE kode_produk=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, kodeProduk);
+
+        int rows = ps.executeUpdate();
+        return rows > 0;
+    } catch (SQLException e) {
+        System.out.println("Gagal menghapus data : " + e.getMessage());
+        return false;
+    }
+}
+    
+}

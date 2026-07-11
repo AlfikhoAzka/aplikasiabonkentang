@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Kelompok 6
+ * @author Bintang Aziz Satrio - 10125042
  */
 public class LoginController {
 

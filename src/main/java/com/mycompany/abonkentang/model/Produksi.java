@@ -7,19 +7,26 @@ package com.mycompany.abonkentang.model;
 import java.util.Date;
 /**
  *
- * @author Bintang Aziz Satrio - 10125042
+ * @author Bintang Aziz Satrio - 10125042, Alfikho Azka Dinova - 10125107
  */
 public class Produksi {
-    private String idProduksi;
-    private String idProduk;
+    private int idProduksi;
+    private int idProduk;
     private int jumlahProduksi;
     private Date tanggalProduksi;
 
     // Constructor Kosong
     public Produksi() {}
 
-    // Constructor Lengkap
-    public Produksi(String idProduksi, String idProduk, int jumlahProduksi, Date tanggalProduksi) {
+    // Constructor Lengkap (tanpa idProduksi, karena kolomnya AUTO_INCREMENT)
+    public Produksi(int idProduk, int jumlahProduksi, Date tanggalProduksi) {
+        this.idProduk = idProduk;
+        this.jumlahProduksi = jumlahProduksi;
+        this.tanggalProduksi = tanggalProduksi;
+    }
+
+    // Constructor Lengkap (dipakai saat membaca data dari database, idProduksi sudah ada)
+    public Produksi(int idProduksi, int idProduk, int jumlahProduksi, Date tanggalProduksi) {
         this.idProduksi = idProduksi;
         this.idProduk = idProduk;
         this.jumlahProduksi = jumlahProduksi;
@@ -27,11 +34,11 @@ public class Produksi {
     }
 
     // Getter dan Setter
-    public String getIdProduksi() { return idProduksi; }
-    public void setIdProduksi(String idProduksi) { this.idProduksi = idProduksi; }
+    public int getIdProduksi() { return idProduksi; }
+    public void setIdProduksi(int idProduksi) { this.idProduksi = idProduksi; }
 
-    public String getIdProduk() { return idProduk; }
-    public void setIdProduk(String idProduk) { this.idProduk = idProduk; }
+    public int getIdProduk() { return idProduk; }
+    public void setIdProduk(int idProduk) { this.idProduk = idProduk; }
 
     public int getJumlahProduksi() { return jumlahProduksi; }
     public void setJumlahProduksi(int jumlahProduksi) { this.jumlahProduksi = jumlahProduksi; }

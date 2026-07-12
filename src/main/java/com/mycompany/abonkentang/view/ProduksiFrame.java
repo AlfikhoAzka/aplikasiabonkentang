@@ -14,10 +14,11 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Bintang Aziz Satrio - 10125042
+ * @author Bintang Aziz Satrio - 10125042, Alfikho Azka Dinova - 10125107
  */
 public class ProduksiFrame extends javax.swing.JFrame {
-    
+
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProduksiFrame.class.getName());
     private final ProduksiController controller;
     private DefaultTableModel tableModel;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -56,7 +57,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
     private void bersihForm() {
         txtIdProduksi.setText("");
         txtIdProduk.setText("");
-        txtJumlahProduksi.setText("");
+        txtIdJumlahProduksi.setText("");
         txtTanggal.setText(dateFormat.format(new Date()));
         txtIdProduksi.setEditable(true);
     }
@@ -68,27 +69,26 @@ public class ProduksiFrame extends javax.swing.JFrame {
     // 1. Tombol Tambah (Menyiapkan form untuk input baru)
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {                                          
         bersihForm();
-        txtIdProduksi.requestFocus();
+        txtIdProduk.requestFocus();
     }                                         
 
     // 2. Tombol Simpan (Validasi & Insert ke Database)
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // Validasi batasan input tidak boleh kosong (Aturan Aturan 3.d)
-        if (txtIdProduksi.getText().trim().isEmpty() || 
-            txtIdProduk.getText().trim().isEmpty() || 
-            txtJumlahProduksi.getText().trim().isEmpty()) {
+        // Catatan: ID Produksi tidak divalidasi/dipakai di sini karena kolomnya AUTO_INCREMENT
+        if (txtIdProduk.getText().trim().isEmpty() || 
+            txtIdJumlahProduksi.getText().trim().isEmpty()) {
             
-            JOptionPane.showMessageDialog(this, "Semua kolom data wajib diisi!", "Validasi Gagal", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Kolom ID Produk dan Jumlah Produksi wajib diisi!", "Validasi Gagal", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
             Produksi p = new Produksi();
-            p.setIdProduksi(txtIdProduksi.getText().trim());
-            p.setIdProduk(txtIdProduk.getText().trim());
+            p.setIdProduk(Integer.parseInt(txtIdProduk.getText().trim()));
             
             // Validasi logika: Jumlah produksi harus berupa angka positif
-            int jumlah = Integer.parseInt(txtJumlahProduksi.getText().trim());
+            int jumlah = Integer.parseInt(txtIdJumlahProduksi.getText().trim());
             if (jumlah <= 0) {
                 JOptionPane.showMessageDialog(this, "Jumlah produksi harus lebih dari 0!", "Validasi Logika", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -100,7 +100,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
             loadData();
             bersihForm();
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Kolom 'Jumlah Produksi' wajib diisi dengan angka!", "Error Tipe Data", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Kolom 'ID Produk' dan 'Jumlah Produksi' wajib diisi dengan angka!", "Error Tipe Data", JOptionPane.ERROR_MESSAGE);
         }
     }                                         
 
@@ -113,9 +113,9 @@ public class ProduksiFrame extends javax.swing.JFrame {
 
         try {
             Produksi p = new Produksi();
-            p.setIdProduksi(txtIdProduksi.getText().trim());
-            p.setIdProduk(txtIdProduk.getText().trim());
-            p.setJumlahProduksi(Integer.parseInt(txtJumlahProduksi.getText().trim()));
+            p.setIdProduksi(Integer.parseInt(txtIdProduksi.getText().trim()));
+            p.setIdProduk(Integer.parseInt(txtIdProduk.getText().trim()));
+            p.setJumlahProduksi(Integer.parseInt(txtIdJumlahProduksi.getText().trim()));
             p.setTanggalProduksi(dateFormat.parse(txtTanggal.getText()));
 
             controller.ubahProduksi(p);
@@ -128,11 +128,12 @@ public class ProduksiFrame extends javax.swing.JFrame {
 
     // 4. Tombol Hapus
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String id = txtIdProduksi.getText().trim();
-        if (id.isEmpty()) {
+        String idText = txtIdProduksi.getText().trim();
+        if (idText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Pilih data pada tabel yang ingin dihapus!");
             return;
         }
+        int id = Integer.parseInt(idText);
 
         int konfirmasi = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus data produksi " + id + "?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
         if (konfirmasi == JOptionPane.YES_OPTION) {
@@ -153,13 +154,12 @@ public class ProduksiFrame extends javax.swing.JFrame {
         if (row != -1) {
             txtIdProduksi.setText(tableModel.getValueAt(row, 0).toString());
             txtIdProduk.setText(tableModel.getValueAt(row, 1).toString());
-            txtJumlahProduksi.setText(tableModel.getValueAt(row, 2).toString());
+            txtIdJumlahProduksi.setText(tableModel.getValueAt(row, 2).toString());
             txtTanggal.setText(tableModel.getValueAt(row, 3).toString());
             
             txtIdProduksi.setEditable(false); // ID Utama dikunci saat mode edit agar tidak melanggar relasi DB
         }
     }                                        
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -232,6 +232,17 @@ public class ProduksiFrame extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tblProduksi);
+
+        btnTambah.addActionListener(this::btnTambahActionPerformed);
+        btnSimpan.addActionListener(this::btnSimpanActionPerformed);
+        btnEdit.addActionListener(this::btnEditActionPerformed);
+        btnHapus.addActionListener(this::btnHapusActionPerformed);
+        btnBersih.addActionListener(this::btnBersihActionPerformed);
+        tblProduksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProduksiMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

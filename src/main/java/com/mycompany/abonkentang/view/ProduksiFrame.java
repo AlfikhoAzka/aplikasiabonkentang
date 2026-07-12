@@ -43,6 +43,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
     private int idProdukTerpilih = -1;
     private final Map<Integer, String> petaProdukById = new LinkedHashMap<>();
     private List<Produksi> daftarProduksi = new ArrayList<>();
+    private boolean modeEdit = false;
 
     /**
      * Creates new form ProduksiFrame
@@ -54,6 +55,8 @@ public class ProduksiFrame extends javax.swing.JFrame {
         muatPetaProdukById();
         initTable();
         loadData();
+        bersihForm();
+        
         txtTanggal.setText(dateFormat.format(new Date()));
         txtTanggal.setEditable(false);
         txtTanggal.setToolTipText("Klik untuk pilih tanggal");
@@ -70,7 +73,10 @@ public class ProduksiFrame extends javax.swing.JFrame {
             }
         });
         lblProduk.setText("Produk               :");
+        tblProduksi.setRowHeight(25);
+        tblProduksi.setShowGrid(false);
         tblProduksi.setSelectionBackground(new java.awt.Color(47, 128, 237));
+        tblProduksi.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
     }
 
     private void muatPetaProdukById() {
@@ -236,99 +242,18 @@ public class ProduksiFrame extends javax.swing.JFrame {
         txtIdProduk.setText("");
         txtIdJumlahProduksi.setText("");
         txtTanggal.setText(dateFormat.format(new Date()));
+
         idProduksiTerpilih = -1;
         idProdukTerpilih = -1;
+
+        tblProduksi.clearSelection();
+
+        modeEdit = false;
+
+        btnTambah.setText("Tambah");
+        btnBersih.setText("Bersih");
     }
-    
-    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        bersihForm();
-        txtIdProduk.requestFocus();
-    }                                         
 
-    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {                       
-        if (idProdukTerpilih == -1 || 
-            txtIdJumlahProduksi.getText().trim().isEmpty()) {
-            
-            JOptionPane.showMessageDialog(this, "Pilih produk (klik kolom ID Produk) dan isi Jumlah Produksi!", "Validasi Gagal", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        try {
-            Produksi p = new Produksi();
-            p.setIdProduk(idProdukTerpilih);
-            
-            int jumlah = Integer.parseInt(txtIdJumlahProduksi.getText().trim());
-            if (jumlah <= 0) {
-                JOptionPane.showMessageDialog(this, "Jumlah produksi harus lebih dari 0!", "Validasi Logika", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            p.setJumlahProduksi(jumlah);
-            p.setTanggalProduksi(new Date());
-
-            controller.tambahProduksi(p);
-            loadData();
-            bersihForm();
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Kolom 'Jumlah Produksi' wajib diisi dengan angka!", "Error Tipe Data", JOptionPane.ERROR_MESSAGE);
-        }
-    }                                         
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {                                        
-        if (idProduksiTerpilih == -1) {
-            JOptionPane.showMessageDialog(this, "Pilih data pada tabel terlebih dahulu yang ingin diubah!");
-            return;
-        }
-        if (idProdukTerpilih == -1) {
-            JOptionPane.showMessageDialog(this, "Pilih produk (klik kolom Produk) terlebih dahulu!");
-            return;
-        }
-
-        try {
-            Produksi p = new Produksi();
-            p.setIdProduksi(idProduksiTerpilih);
-            p.setIdProduk(idProdukTerpilih);
-            p.setJumlahProduksi(Integer.parseInt(txtIdJumlahProduksi.getText().trim()));
-            p.setTanggalProduksi(dateFormat.parse(txtTanggal.getText()));
-
-            controller.ubahProduksi(p);
-            loadData();
-            bersihForm();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Gagal mengubah data: " + e.getMessage());
-        }
-    }                                       
-
-    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        if (idProduksiTerpilih == -1) {
-            JOptionPane.showMessageDialog(this, "Pilih data pada tabel yang ingin dihapus!");
-            return;
-        }
-        int id = idProduksiTerpilih;
-
-        int konfirmasi = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus data produksi " + id + "?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
-        if (konfirmasi == JOptionPane.YES_OPTION) {
-            controller.hapusProduksi(id);
-            loadData();
-            bersihForm();
-        }
-    }                                        
-
-    private void btnBersihActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        bersihForm();
-    }                                         
-
-    private void tblProduksiMouseClicked(java.awt.event.MouseEvent evt) {                                         
-        int row = tblProduksi.getSelectedRow();
-        if (row != -1 && row < daftarProduksi.size()) {
-            Produksi p = daftarProduksi.get(row);
-
-            idProduksiTerpilih = p.getIdProduksi();
-            idProdukTerpilih = p.getIdProduk();
-            txtIdProduk.setText(namaProduk(p.getIdProduk()));
-            txtIdJumlahProduksi.setText(String.valueOf(p.getJumlahProduksi()));
-            txtTanggal.setText(dateFormat.format(p.getTanggalProduksi()));
-        }
-    }                                        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -344,9 +269,6 @@ public class ProduksiFrame extends javax.swing.JFrame {
         btnKembali = new com.mycompany.abonkentang.components.Button();
         jPanel1 = new javax.swing.JPanel();
         lblDataProduksi = new javax.swing.JLabel();
-        btnHapus = new com.mycompany.abonkentang.components.Button();
-        btnBersih = new com.mycompany.abonkentang.components.Button();
-        btnSimpan = new com.mycompany.abonkentang.components.Button();
         btnEdit = new com.mycompany.abonkentang.components.Button();
         lblProduk = new javax.swing.JLabel();
         txtIdJumlahProduksi = new javax.swing.JTextField();
@@ -355,11 +277,14 @@ public class ProduksiFrame extends javax.swing.JFrame {
         lblJumlahProduksi = new javax.swing.JLabel();
         lblTanggal = new javax.swing.JLabel();
         txtIdProduk = new javax.swing.JTextField();
+        btnHapus = new com.mycompany.abonkentang.components.Button();
+        btnBersih = new com.mycompany.abonkentang.components.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tblProduksi.setBackground(new java.awt.Color(70, 71, 174));
         tblProduksi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tblProduksi.setForeground(new java.awt.Color(255, 255, 255));
         tblProduksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -371,6 +296,11 @@ public class ProduksiFrame extends javax.swing.JFrame {
                 "ID Produksi", "ID Produk", "Jumlah Produksi", "Tanggal"
             }
         ));
+        tblProduksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProduksiMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProduksi);
 
         btnKembali.setText("Kembali");
@@ -380,58 +310,42 @@ public class ProduksiFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(70, 71, 174));
 
         lblDataProduksi.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblDataProduksi.setForeground(new java.awt.Color(255, 255, 255));
         lblDataProduksi.setText("DATA PRODUKSI");
-
-        btnHapus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnHapus.setText("Hapus");
-
-        btnBersih.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnBersih.setText("Bersih");
-
-        btnSimpan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSimpan.setText("Simpan");
 
         btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(this::btnEditActionPerformed);
 
         lblProduk.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblProduk.setForeground(new java.awt.Color(255, 255, 255));
         lblProduk.setText("ID Produk             :");
+
+        txtIdJumlahProduksi.addActionListener(this::txtIdJumlahProduksiActionPerformed);
 
         btnTambah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnTambah.setText("Tambah");
+        btnTambah.addActionListener(this::btnTambahActionPerformed);
+
+        txtTanggal.addActionListener(this::txtTanggalActionPerformed);
 
         lblJumlahProduksi.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblJumlahProduksi.setForeground(new java.awt.Color(255, 255, 255));
         lblJumlahProduksi.setText("Jumlah Produksi  :");
 
         lblTanggal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTanggal.setForeground(new java.awt.Color(255, 255, 255));
         lblTanggal.setText("Tanggal                 :");
+
+        txtIdProduk.addActionListener(this::txtIdProdukActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(lblDataProduksi)
-                .addContainerGap(142, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnEdit)
-                                    .addComponent(btnTambah))
-                                .addGap(26, 26, 26)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnSimpan)
-                                    .addComponent(btnHapus)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(51, 51, 51)
-                                .addComponent(btnBersih)))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblProduk)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -442,20 +356,28 @@ public class ProduksiFrame extends javax.swing.JFrame {
                         .addComponent(txtIdJumlahProduksi, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblTanggal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(txtTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(lblDataProduksi)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(lblDataProduksi)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(lblProduk))
+                    .addComponent(lblProduk)
                     .addComponent(txtIdProduk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -465,18 +387,20 @@ public class ProduksiFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTanggal)
                     .addComponent(txtTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTambah)
-                    .addComponent(btnSimpan))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit)
-                    .addComponent(btnHapus))
-                .addGap(18, 18, 18)
-                .addComponent(btnBersih)
-                .addContainerGap(46, Short.MAX_VALUE))
+                    .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
+
+        btnHapus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnHapus.setText("Hapus");
+        btnHapus.addActionListener(this::btnHapusActionPerformed);
+
+        btnBersih.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnBersih.setText("Bersih");
+        btnBersih.addActionListener(this::btnBersihActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -485,25 +409,36 @@ public class ProduksiFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(btnKembali))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnHapus)
+                            .addComponent(btnBersih)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnKembali)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addComponent(btnKembali)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(btnBersih, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69)
+                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         pack();
@@ -513,6 +448,176 @@ public class ProduksiFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         new MainFrame().setVisible(true);
     }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        // TODO add your handling code here:
+        if (!modeEdit) {
+
+            if (idProdukTerpilih == -1) {
+                JOptionPane.showMessageDialog(this,
+                        "Pilih produk terlebih dahulu!");
+                return;
+            }
+
+            if (txtIdJumlahProduksi.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Jumlah produksi harus diisi!");
+                return;
+            }
+
+            try {
+
+                Produksi p = new Produksi();
+
+                p.setIdProduk(idProdukTerpilih);
+                p.setJumlahProduksi(
+                        Integer.parseInt(txtIdJumlahProduksi.getText().trim()));
+                p.setTanggalProduksi(
+                        dateFormat.parse(txtTanggal.getText()));
+
+                controller.tambahProduksi(p);
+
+                JOptionPane.showMessageDialog(this,
+                        "Data produksi berhasil ditambahkan.");
+
+                loadData();
+                bersihForm();
+
+            } catch (Exception e) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Gagal menambah data : " + e.getMessage());
+
+            }
+
+        } else {
+
+            try {
+
+                Produksi p = new Produksi();
+
+                p.setIdProduksi(idProduksiTerpilih);
+                p.setIdProduk(idProdukTerpilih);
+                p.setJumlahProduksi(
+                        Integer.parseInt(txtIdJumlahProduksi.getText().trim()));
+                p.setTanggalProduksi(
+                        dateFormat.parse(txtTanggal.getText()));
+
+                controller.ubahProduksi(p);
+
+                JOptionPane.showMessageDialog(this,
+                        "Data produksi berhasil diubah.");
+
+                bersihForm();
+                loadData();
+
+            } catch (Exception e) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Gagal mengubah data : " + e.getMessage());
+
+            }
+
+        }
+    }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        if (idProduksiTerpilih == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Pilih data terlebih dahulu.");
+            return;
+        }
+
+        Produksi p = null;
+
+        for (Produksi data : daftarProduksi) {
+            if (data.getIdProduksi() == idProduksiTerpilih) {
+                p = data;
+                break;
+            }
+        }
+
+        if (p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Data tidak ditemukan.");
+            return;
+        }
+
+        idProdukTerpilih = p.getIdProduk();
+
+        txtIdProduk.setText(namaProduk(p.getIdProduk()));
+        txtIdJumlahProduksi.setText(String.valueOf(p.getJumlahProduksi()));
+        txtTanggal.setText(dateFormat.format(p.getTanggalProduksi()));
+
+        modeEdit = true;
+
+        btnTambah.setText("Simpan Perubahan");
+        btnBersih.setText("Batal");
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        // TODO add your handling code here:
+                if (idProduksiTerpilih == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Pilih data yang ingin dihapus!");
+            return;
+        }
+
+        int konfirmasi = JOptionPane.showConfirmDialog(
+                this,
+                "Yakin ingin menghapus data ini?",
+                "Konfirmasi",
+                JOptionPane.YES_NO_OPTION);
+
+        if (konfirmasi == JOptionPane.YES_OPTION) {
+
+            controller.hapusProduksi(idProduksiTerpilih);
+
+            JOptionPane.showMessageDialog(this,
+                    "Data produksi berhasil dihapus.");
+
+            loadData();
+            bersihForm();
+        }
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnBersihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBersihActionPerformed
+        // TODO add your handling code here:
+            if (modeEdit) {
+                bersihForm();
+
+            } else {
+                txtIdProduk.setText("");
+                txtIdJumlahProduksi.setText("");
+                txtTanggal.setText(dateFormat.format(new Date()));
+
+                idProdukTerpilih = -1;
+            }
+    }//GEN-LAST:event_btnBersihActionPerformed
+
+    private void txtIdProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdProdukActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdProdukActionPerformed
+
+    private void txtTanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTanggalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTanggalActionPerformed
+
+    private void txtIdJumlahProduksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdJumlahProduksiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdJumlahProduksiActionPerformed
+
+    private void tblProduksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProduksiMouseClicked
+        // TODO add your handling code here:
+        int row = tblProduksi.getSelectedRow();
+
+        if (row != -1) {
+            Produksi p = daftarProduksi.get(row);
+
+            idProduksiTerpilih = p.getIdProduksi();
+        }
+    }//GEN-LAST:event_tblProduksiMouseClicked
 
     /**
      * @param args the command line arguments
@@ -544,7 +649,6 @@ public class ProduksiFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKembali;
-    private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnTambah;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

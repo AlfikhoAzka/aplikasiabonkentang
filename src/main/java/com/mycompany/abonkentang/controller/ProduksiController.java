@@ -9,7 +9,6 @@ import com.mycompany.abonkentang.model.Produksi;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,10 +16,8 @@ import javax.swing.JOptionPane;
  */
 public class ProduksiController {
 
-    // Kolom yang boleh dipakai untuk pencarian (whitelist, mencegah SQL Injection)
     private static final List<String> KOLOM_DIIZINKAN = List.of("id_produksi", "id_produk");
 
-    // 1. Tambah Data (id_produksi tidak diisi manual karena AUTO_INCREMENT di database)
     public void tambahProduksi(Produksi p) {
         String sqlInsert = "INSERT INTO produksi (id_produk, jumlah_produksi, tanggal_produksi) VALUES (?, ?, ?)";
 
@@ -37,19 +34,17 @@ public class ProduksiController {
                 tambahStokProduk(conn, p.getIdProduk(), p.getJumlahProduksi());
 
                 conn.commit();
-                JOptionPane.showMessageDialog(null, "Data Produksi Berhasil Ditambahkan! Stok produk otomatis bertambah.");
             } catch (SQLException e) {
                 conn.rollback();
-                JOptionPane.showMessageDialog(null, "Gagal Tambah Data: " + e.getMessage());
+                throw new RuntimeException("Gagal Tambah Data: " + e.getMessage(), e);
             } finally {
                 conn.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Gagal terhubung ke database: " + e.getMessage());
+            throw new RuntimeException("Gagal terhubung ke database: " + e.getMessage(), e);
         }
     }
 
-    // 2. Tampil Data
     public List<Produksi> tampilProduksi() {
         List<Produksi> list = new ArrayList<>();
         String sql = "SELECT * FROM produksi";
@@ -67,12 +62,11 @@ public class ProduksiController {
                 list.add(p);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Gagal Memuat Data: " + e.getMessage());
+            throw new RuntimeException("Gagal Memuat Data: " + e.getMessage(), e);
         }
         return list;
     }
 
-    // 3. Ubah Data (stok_produk disesuaikan: stok produk lama dikurangi, stok produk baru ditambah)
     public void ubahProduksi(Produksi p) {
         String sqlAmbilLama = "SELECT id_produk, jumlah_produksi FROM produksi WHERE id_produksi = ?";
         String sqlUpdate = "UPDATE produksi SET id_produk=?, jumlah_produksi=?, tanggal_produksi=? WHERE id_produksi=?";
@@ -101,24 +95,21 @@ public class ProduksiController {
                     ps.executeUpdate();
                 }
 
-                // Batalkan efek stok dari data produksi yang lama, lalu terapkan efek stok yang baru
                 tambahStokProduk(conn, idProdukLama, -jumlahLama);
                 tambahStokProduk(conn, p.getIdProduk(), p.getJumlahProduksi());
 
                 conn.commit();
-                JOptionPane.showMessageDialog(null, "Data Produksi Berhasil Diubah! Stok produk otomatis disesuaikan.");
             } catch (SQLException e) {
                 conn.rollback();
-                JOptionPane.showMessageDialog(null, "Gagal Ubah Data: " + e.getMessage());
+                throw new RuntimeException("Gagal Ubah Data: " + e.getMessage(), e);
             } finally {
                 conn.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Gagal terhubung ke database: " + e.getMessage());
+            throw new RuntimeException("Gagal terhubung ke database: " + e.getMessage(), e);
         }
     }
 
-    // 4. Hapus Data (stok_produk dikurangi sejumlah produksi yang dihapus)
     public void hapusProduksi(int idProduksi) {
         String sqlAmbilLama = "SELECT id_produk, jumlah_produksi FROM produksi WHERE id_produksi = ?";
         String sqlDelete = "DELETE FROM produksi WHERE id_produksi=?";
@@ -147,26 +138,22 @@ public class ProduksiController {
                 tambahStokProduk(conn, idProduk, -jumlah);
 
                 conn.commit();
-                JOptionPane.showMessageDialog(null, "Data Produksi Berhasil Dihapus! Stok produk otomatis dikurangi.");
             } catch (SQLException e) {
                 conn.rollback();
-                JOptionPane.showMessageDialog(null, "Gagal Hapus Data: " + e.getMessage());
+                throw new RuntimeException("Gagal Hapus Data: " + e.getMessage(), e);
             } finally {
                 conn.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Gagal terhubung ke database: " + e.getMessage());
+            throw new RuntimeException("Gagal terhubung ke database: " + e.getMessage(), e);
         }
     }
 
-    // 5. Cari Data (Berdasarkan ID Produksi atau ID Produk)
     public List<Produksi> cariProduksi(String keyword, String kolom) {
         List<Produksi> list = new ArrayList<>();
 
-        // Whitelist nama kolom agar tidak bisa disuntik lewat parameter "kolom"
         if (!KOLOM_DIIZINKAN.contains(kolom)) {
-            JOptionPane.showMessageDialog(null, "Kolom pencarian tidak valid: " + kolom);
-            return list;
+            throw new IllegalArgumentException("Kolom pencarian tidak valid: " + kolom);
         }
 
         String sql = "SELECT * FROM produksi WHERE " + kolom + " LIKE ?";
@@ -186,16 +173,11 @@ public class ProduksiController {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Pencarian Gagal: " + e.getMessage());
+            throw new RuntimeException("Pencarian Gagal: " + e.getMessage(), e);
         }
         return list;
     }
 
-    /**
-     * Menambah (atau mengurangi, kalau delta negatif) jumlah_stok di stok_produk
-     * untuk id_produk tertentu. Kalau baris stok belum ada, dibuatkan baris baru.
-     * Method ini bagian dari transaksi yang sama dengan pemanggilnya (conn TIDAK di-commit/close di sini).
-     */
     private void tambahStokProduk(Connection conn, int idProduk, int delta) throws SQLException {
         String sqlCek = "SELECT id_stok FROM stok_produk WHERE id_produk = ? LIMIT 1";
         Integer idStok = null;

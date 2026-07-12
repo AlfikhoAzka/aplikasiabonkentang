@@ -15,18 +15,15 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Kelompok 6
+ * @author Alfikho Azka Dinova - 10125107
  */public class BahanBakuController {
 
     // Menampilkan semua data ke JTable
     public void tampilData(JTable table) {
-        try {
-            Connection conn = koneksi.getKoneksi();
-
-            String sql = "SELECT * FROM bahan_baku ORDER BY nama_bahan";
-
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
+        String sql = "SELECT * FROM bahan_baku ORDER BY nama_bahan";
+        try (Connection conn = koneksi.getKoneksi();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
 
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("ID");
@@ -55,13 +52,10 @@ import javax.swing.table.DefaultTableModel;
 
     // Menambah data baru
     public void simpanData(BahanBaku bb) {
-        try {
-            Connection conn = koneksi.getKoneksi();
-
-            String sql = "INSERT INTO bahan_baku (nama_bahan, satuan, stok_bahan, harga_satuan) "
-                    + "VALUES (?, ?, ?, ?)";
-
-            PreparedStatement ps = conn.prepareStatement(sql);
+        String sql = "INSERT INTO bahan_baku (nama_bahan, satuan, stok_bahan, harga_satuan) "
+                + "VALUES (?, ?, ?, ?)";
+        try (Connection conn = koneksi.getKoneksi();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, bb.getNamaBahan());
             ps.setString(2, bb.getSatuan());
             ps.setDouble(3, bb.getStokBahan());
@@ -76,38 +70,11 @@ import javax.swing.table.DefaultTableModel;
         }
     }
 
-    // Mengubah data yang sudah ada
-    public void ubahData(BahanBaku bb) {
-        try {
-            Connection conn = koneksi.getKoneksi();
-
-            String sql = "UPDATE bahan_baku SET nama_bahan=?, satuan=?, stok_bahan=?, harga_satuan=? "
-                    + "WHERE id_bahan=?";
-
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, bb.getNamaBahan());
-            ps.setString(2, bb.getSatuan());
-            ps.setDouble(3, bb.getStokBahan());
-            ps.setDouble(4, bb.getHargaSatuan());
-            ps.setInt(5, bb.getIdBahan());
-
-            ps.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Data berhasil diubah");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Gagal mengubah data: " + e.getMessage());
-        }
-    }
-
     // Menghapus data
     public void hapusData(int idBahan) {
-        try {
-            Connection conn = koneksi.getKoneksi();
-
-            String sql = "DELETE FROM bahan_baku WHERE id_bahan=?";
-
-            PreparedStatement ps = conn.prepareStatement(sql);
+        String sql = "DELETE FROM bahan_baku WHERE id_bahan=?";
+        try (Connection conn = koneksi.getKoneksi();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idBahan);
 
             ps.executeUpdate();
@@ -121,12 +88,9 @@ import javax.swing.table.DefaultTableModel;
 
     // Pencarian berdasarkan nama bahan
     public void cariByNama(JTable table, String keyword) {
-        try {
-            Connection conn = koneksi.getKoneksi();
-
-            String sql = "SELECT * FROM bahan_baku WHERE nama_bahan LIKE ? ORDER BY nama_bahan";
-
-            PreparedStatement ps = conn.prepareStatement(sql);
+        String sql = "SELECT * FROM bahan_baku WHERE nama_bahan LIKE ? ORDER BY nama_bahan";
+        try (Connection conn = koneksi.getKoneksi();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + keyword + "%");
 
             ResultSet rs = ps.executeQuery();
@@ -159,12 +123,9 @@ import javax.swing.table.DefaultTableModel;
     // Mengambil satu data berdasarkan ID, dipakai untuk keperluan edit
     public BahanBaku getById(int idBahan) {
         BahanBaku bb = null;
-        try {
-            Connection conn = koneksi.getKoneksi();
-
-            String sql = "SELECT * FROM bahan_baku WHERE id_bahan = ?";
-
-            PreparedStatement ps = conn.prepareStatement(sql);
+        String sql = "SELECT * FROM bahan_baku WHERE id_bahan = ?";
+        try (Connection conn = koneksi.getKoneksi();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idBahan);
 
             ResultSet rs = ps.executeQuery();
@@ -185,19 +146,15 @@ import javax.swing.table.DefaultTableModel;
     }
     
     public void updateData(BahanBaku bb) {
+         String sql = "UPDATE bahan_baku "
+                   + "SET nama_bahan=?, "
+                   + "satuan=?, "
+                   + "stok_bahan=?, "
+                   + "harga_satuan=? "
+                   + "WHERE id_bahan=?";
 
-        try {
-
-            Connection conn = koneksi.getKoneksi();
-
-            String sql = "UPDATE bahan_baku "
-                       + "SET nama_bahan=?, "
-                       + "satuan=?, "
-                       + "stok_bahan=?, "
-                       + "harga_satuan=? "
-                       + "WHERE id_bahan=?";
-
-            PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, bb.getNamaBahan());
             ps.setString(2, bb.getSatuan());

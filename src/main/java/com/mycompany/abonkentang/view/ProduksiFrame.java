@@ -4,11 +4,19 @@
  */
 package com.mycompany.abonkentang.view;
 
+import com.mycompany.abonkentang.config.koneksi;
 import com.mycompany.abonkentang.controller.ProduksiController;
 import com.mycompany.abonkentang.model.Produksi;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,8 +38,54 @@ public class ProduksiFrame extends javax.swing.JFrame {
         controller = new ProduksiController();
         initTable();
         loadData();
-        txtTanggal.setText(dateFormat.format(new Date())); // Mengisi tanggal otomatis hari ini
-        txtTanggal.setEditable(false); // Validasi: tanggal diisi sistem agar tidak salah format
+        txtTanggal.setText(dateFormat.format(new Date()));
+        txtTanggal.setEditable(false);
+
+        txtIdProduk.setEditable(false);
+        txtIdProduk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pilihProduk();
+            }
+        });
+    }
+
+    private void pilihProduk() {
+        List<String> pilihan = new ArrayList<>();
+        Map<String, Integer> petaId = new LinkedHashMap<>();
+
+        String sql = "SELECT id_produk, kode_produk, nama_produk FROM produk ORDER BY nama_produk";
+        try (Connection conn = koneksi.getKoneksi();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String label = rs.getString("kode_produk") + " - " + rs.getString("nama_produk");
+                pilihan.add(label);
+                petaId.put(label, rs.getInt("id_produk"));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Gagal memuat daftar produk: " + e.getMessage());
+            return;
+        }
+
+        if (pilihan.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Belum ada data produk. Tambahkan produk terlebih dahulu di menu Produk.");
+            return;
+        }
+
+        String dipilih = (String) JOptionPane.showInputDialog(
+            this,
+            "Pilih produk yang diproduksi:",
+            "Pilih Produk",
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            pilihan.toArray(),
+            pilihan.get(0)
+        );
+
+        if (dipilih != null) {
+            txtIdProduk.setText(String.valueOf(petaId.get(dipilih)));
+        }
     }
     
     private void initTable() {
@@ -61,21 +115,13 @@ public class ProduksiFrame extends javax.swing.JFrame {
         txtTanggal.setText(dateFormat.format(new Date()));
         txtIdProduksi.setEditable(true);
     }
-    
-    // =========================================================================
-    // LOGIKA TOMBOL AKSI (Sesuaikan dengan Event ActionPerformed di NetBeans)
-    // =========================================================================
 
-    // 1. Tombol Tambah (Menyiapkan form untuk input baru)
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {                                          
         bersihForm();
         txtIdProduk.requestFocus();
     }                                         
 
-    // 2. Tombol Simpan (Validasi & Insert ke Database)
-    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // Validasi batasan input tidak boleh kosong (Aturan Aturan 3.d)
-        // Catatan: ID Produksi tidak divalidasi/dipakai di sini karena kolomnya AUTO_INCREMENT
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {                         
         if (txtIdProduk.getText().trim().isEmpty() || 
             txtIdJumlahProduksi.getText().trim().isEmpty()) {
             
@@ -87,7 +133,6 @@ public class ProduksiFrame extends javax.swing.JFrame {
             Produksi p = new Produksi();
             p.setIdProduk(Integer.parseInt(txtIdProduk.getText().trim()));
             
-            // Validasi logika: Jumlah produksi harus berupa angka positif
             int jumlah = Integer.parseInt(txtIdJumlahProduksi.getText().trim());
             if (jumlah <= 0) {
                 JOptionPane.showMessageDialog(this, "Jumlah produksi harus lebih dari 0!", "Validasi Logika", JOptionPane.WARNING_MESSAGE);
@@ -104,7 +149,6 @@ public class ProduksiFrame extends javax.swing.JFrame {
         }
     }                                         
 
-    // 3. Tombol Edit (Ubah Data)
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {                                        
         if (txtIdProduksi.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Pilih data pada tabel terlebih dahulu yang ingin diubah!");
@@ -126,7 +170,6 @@ public class ProduksiFrame extends javax.swing.JFrame {
         }
     }                                       
 
-    // 4. Tombol Hapus
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {                                         
         String idText = txtIdProduksi.getText().trim();
         if (idText.isEmpty()) {
@@ -143,12 +186,10 @@ public class ProduksiFrame extends javax.swing.JFrame {
         }
     }                                        
 
-    // 5. Tombol Bersih
     private void btnBersihActionPerformed(java.awt.event.ActionEvent evt) {                                          
         bersihForm();
     }                                         
 
-    // 6. Event ketika baris tabel diklik (Mengisi Form Otomatis)
     private void tblProduksiMouseClicked(java.awt.event.MouseEvent evt) {                                         
         int row = tblProduksi.getSelectedRow();
         if (row != -1) {

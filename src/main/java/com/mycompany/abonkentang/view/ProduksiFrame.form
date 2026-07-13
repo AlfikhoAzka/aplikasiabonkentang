@@ -152,6 +152,9 @@
           <Color blue="ae" green="47" red="46" type="rgb"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.mycompany.abonkentang.components.CardPanel();"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">

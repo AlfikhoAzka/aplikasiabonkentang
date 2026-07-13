@@ -37,9 +37,12 @@
           <Color blue="33" green="33" red="33" type="rgb"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.mycompany.abonkentang.components.CardPanel();"/>
+      </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="77" width="1146" height="680"/>
+          <AbsoluteConstraints x="0" y="77" width="1146" height="440"/>
         </Constraint>
       </Constraints>
 
@@ -206,6 +209,9 @@
               <Color blue="ae" green="47" red="46" type="rgb"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.mycompany.abonkentang.components.CardPanel();"/>
+          </AuxValues>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -439,6 +445,9 @@
               <Color blue="ae" green="47" red="46" type="rgb"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.mycompany.abonkentang.components.CardPanel();"/>
+          </AuxValues>
 
           <Layout>
             <DimensionLayout dim="0">

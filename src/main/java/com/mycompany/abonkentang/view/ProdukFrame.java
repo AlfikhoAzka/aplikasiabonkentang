@@ -100,7 +100,7 @@ public class ProdukFrame extends javax.swing.JFrame {
         btnHapus = new com.mycompany.abonkentang.components.Button();
         btnBersih = new com.mycompany.abonkentang.components.Button();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProduk = new javax.swing.JTable();
+        tblProduk = new com.mycompany.abonkentang.components.Table();
         txtHargaJual = new javax.swing.JTextField();
         jLabel6 = new com.mycompany.abonkentang.components.Label();
         cmbSatuan = new javax.swing.JComboBox<>();

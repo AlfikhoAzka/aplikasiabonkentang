@@ -152,6 +152,7 @@ public class MainFrame extends javax.swing.JFrame {
                 this, "Yakin ingin logout?", "Konfirmasi Logout",
                 javax.swing.JOptionPane.YES_NO_OPTION);
         if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+            com.mycompany.abonkentang.config.Sesi.logout();
             new LoginFrame().setVisible(true);
             this.dispose();
         }

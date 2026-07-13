@@ -6,7 +6,7 @@ package com.mycompany.abonkentang.view;
 
 /**
  *
- * @author Alfikho Azka
+ * @author Alfikho Azka Dinova - 10125107
  */
 public class TransaksiFrame extends javax.swing.JFrame {
     
@@ -17,6 +17,8 @@ public class TransaksiFrame extends javax.swing.JFrame {
      */
     public TransaksiFrame() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(51,51,51));
+        btnReset.setForeground(java.awt.Color.WHITE);
     }
 
     /**
@@ -28,21 +30,160 @@ public class TransaksiFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTransaksiPenjualan = new com.mycompany.abonkentang.components.TitleLabel();
+        jTextField1 = new javax.swing.JTextField();
+        lblTotal = new com.mycompany.abonkentang.components.Label();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        lblJumlah = new com.mycompany.abonkentang.components.Label();
+        jTextField2 = new javax.swing.JTextField();
+        btnTambahKeranjang = new com.mycompany.abonkentang.components.Button();
+        btnReset = new com.mycompany.abonkentang.components.Button();
+        btnSimpanTransaksi = new com.mycompany.abonkentang.components.Button();
+        lblKeranjang = new com.mycompany.abonkentang.components.TitleLabel();
+        btnHapusItem = new com.mycompany.abonkentang.components.Button();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 0, 0));
+
+        lblTransaksiPenjualan.setForeground(new java.awt.Color(255, 255, 255));
+        lblTransaksiPenjualan.setText("Transaksi Penjualan");
+
+        jTextField1.setText("Cari");
+
+        lblTotal.setForeground(new java.awt.Color(255, 255, 255));
+        lblTotal.setText("TOTAL");
+
+        jTable1.setBackground(new java.awt.Color(70, 71, 174));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Kode", "Nama Produk", "Harga", "Stok"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        lblJumlah.setForeground(new java.awt.Color(255, 255, 255));
+        lblJumlah.setText("Jumlah:");
+
+        btnTambahKeranjang.setText("Tambah ke keranjang");
+        btnTambahKeranjang.addActionListener(this::btnTambahKeranjangActionPerformed);
+
+        btnReset.setBackground(new java.awt.Color(102, 102, 102));
+        btnReset.setText("Reset Keranjang");
+        btnReset.addActionListener(this::btnResetActionPerformed);
+
+        btnSimpanTransaksi.setBackground(new java.awt.Color(70, 71, 174));
+        btnSimpanTransaksi.setText("Simpan Transaksi");
+        btnSimpanTransaksi.addActionListener(this::btnSimpanTransaksiActionPerformed);
+
+        lblKeranjang.setForeground(new java.awt.Color(255, 255, 255));
+        lblKeranjang.setText("Keranjang");
+
+        btnHapusItem.setText("Hapus Item Terpilih");
+        btnHapusItem.addActionListener(this::btnHapusItemActionPerformed);
+
+        jTable2.setBackground(new java.awt.Color(70, 71, 174));
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Produk", "Jumlah", "Harga Satuan", "Subtotal"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTransaksiPenjualan)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblJumlah)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(103, 103, 103)
+                                .addComponent(btnTambahKeranjang, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGap(139, 139, 139)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTotal)
+                            .addComponent(lblKeranjang)
+                            .addComponent(btnHapusItem, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(111, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSimpanTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(117, 117, 117))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(lblTransaksiPenjualan)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblKeranjang))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnHapusItem))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblJumlah)
+                    .addComponent(jTextField2)
+                    .addComponent(btnTambahKeranjang)
+                    .addComponent(lblTotal))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnReset)
+                    .addComponent(btnSimpanTransaksi))
+                .addGap(69, 69, 69))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTambahKeranjangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahKeranjangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTambahKeranjangActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnSimpanTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanTransaksiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSimpanTransaksiActionPerformed
+
+    private void btnHapusItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHapusItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +211,19 @@ public class TransaksiFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHapusItem;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnSimpanTransaksi;
+    private javax.swing.JButton btnTambahKeranjang;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblJumlah;
+    private javax.swing.JLabel lblKeranjang;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JLabel lblTransaksiPenjualan;
     // End of variables declaration//GEN-END:variables
 }

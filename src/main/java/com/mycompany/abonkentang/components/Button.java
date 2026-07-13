@@ -12,7 +12,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author Kelompok 6
+ * @author ALfikho Azka Dinova - 10125107
  */
 public class Button extends JButton {
     

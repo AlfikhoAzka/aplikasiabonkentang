@@ -11,87 +11,101 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Rassya Haikal Firdaus - 10125037, Alfikho Azka Dinova - 10125107
  */
 public class ProdukController {
-    
-    private Connection conn;
 
-    public ProdukController() {
-        conn = koneksi.getKoneksi();
-    }
-    public ResultSet getDataProduk() {
-        try {
-            Statement st = conn.createStatement();
-            String sql = "SELECT * FROM produk";
-            return st.executeQuery(sql);
+    public List<Produk> getDataProduk() {
+        List<Produk> list = new ArrayList<>();
+        String sql = "SELECT * FROM produk";
+
+        try (Connection conn = koneksi.getKoneksi();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Produk produk = new Produk();
+                produk.setIdProduk(rs.getInt("id_produk"));
+                produk.setKodeProduk(rs.getString("kode_produk"));
+                produk.setNamaProduk(rs.getString("nama_produk"));
+                produk.setKategori(rs.getString("kategori"));
+                produk.setSatuan(rs.getString("satuan"));
+                produk.setHargaJual(rs.getDouble("harga_jual"));
+                list.add(produk);
+            }
+
         } catch (SQLException e) {
             System.out.println("Gagal mengambil data: " + e.getMessage());
-            return null;
         }
-    }   
-    public boolean simpanProduk(Produk produk) {
+        return list;
+    }
 
-    try {
+    public boolean simpanProduk(Produk produk) {
 
         String sql = "INSERT INTO produk(kode_produk,nama_produk,kategori,satuan,harga_jual) VALUES (?,?,?,?,?)";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        ps.setString(1, produk.getKodeProduk());
-        ps.setString(2, produk.getNamaProduk());
-        ps.setString(3, produk.getKategori());
-        ps.setString(4, produk.getSatuan());
-        ps.setDouble(5, produk.getHargaJual());
+            ps.setString(1, produk.getKodeProduk());
+            ps.setString(2, produk.getNamaProduk());
+            ps.setString(3, produk.getKategori());
+            ps.setString(4, produk.getSatuan());
+            ps.setDouble(5, produk.getHargaJual());
 
-        ps.executeUpdate();
+            ps.executeUpdate();
 
-        return true;
+            return true;
 
-    } catch (SQLException e) {
+        } catch (SQLException e) {
 
-        System.out.println("Gagal menyimpan data : " + e.getMessage());
+            System.out.println("Gagal menyimpan data : " + e.getMessage());
 
-        return false;
+            return false;
+        }
     }
-}  
 
     public boolean updateProduk(String kodeProdukLama, Produk produk) {
-    try {
         String sql = "UPDATE produk SET kode_produk=?, nama_produk=?, kategori=?, satuan=?, harga_jual=? "
                 + "WHERE kode_produk=?";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, produk.getKodeProduk());
-        ps.setString(2, produk.getNamaProduk());
-        ps.setString(3, produk.getKategori());
-        ps.setString(4, produk.getSatuan());
-        ps.setDouble(5, produk.getHargaJual());
-        ps.setString(6, kodeProdukLama);
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        int rows = ps.executeUpdate();
-        return rows > 0;
-    } catch (SQLException e) {
-        System.out.println("Gagal mengubah data : " + e.getMessage());
-        return false;
+            ps.setString(1, produk.getKodeProduk());
+            ps.setString(2, produk.getNamaProduk());
+            ps.setString(3, produk.getKategori());
+            ps.setString(4, produk.getSatuan());
+            ps.setDouble(5, produk.getHargaJual());
+            ps.setString(6, kodeProdukLama);
+
+            int rows = ps.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            System.out.println("Gagal mengubah data : " + e.getMessage());
+            return false;
+        }
     }
-}
-    
+
     public boolean hapusProduk(String kodeProduk) {
-    try {
         String sql = "DELETE FROM produk WHERE kode_produk=?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, kodeProduk);
 
-        int rows = ps.executeUpdate();
-        return rows > 0;
-    } catch (SQLException e) {
-        System.out.println("Gagal menghapus data : " + e.getMessage());
-        return false;
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, kodeProduk);
+
+            int rows = ps.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            System.out.println("Gagal menghapus data : " + e.getMessage());
+            return false;
+        }
     }
-}
-    
+
 }

@@ -396,6 +396,7 @@ public class ProdukFrame extends javax.swing.JFrame {
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         // TODO add your handling code here:
         new MainFrame().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
 
     /**

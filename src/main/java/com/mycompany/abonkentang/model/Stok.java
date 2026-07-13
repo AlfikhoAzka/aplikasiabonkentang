@@ -10,8 +10,8 @@ import java.util.Date;
  * @author Alfikho Azka Dinova - 10125107
  */
 public class Stok {
+
     private int idStok;
-    private int idProduk;
     private String namaProduk;
     private String satuan;
     private int jumlahStok;
@@ -23,14 +23,6 @@ public class Stok {
 
     public void setIdStok(int idStok) {
         this.idStok = idStok;
-    }
-
-    public int getIdProduk() {
-        return idProduk;
-    }
-
-    public void setIdProduk(int idProduk) {
-        this.idProduk = idProduk;
     }
 
     public String getNamaProduk() {

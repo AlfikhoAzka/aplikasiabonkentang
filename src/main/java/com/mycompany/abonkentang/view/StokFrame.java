@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.abonkentang.view;
-
+import java.text.SimpleDateFormat;
+import com.mycompany.abonkentang.controller.StokController;
+import com.mycompany.abonkentang.model.Stok;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 
 /**
@@ -13,31 +17,65 @@ import javax.swing.JTable;
 public class StokFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(StokFrame.class.getName());
+    private StokController controller;
+    private final SimpleDateFormat formatTanggal =
+        new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     /**
      * Creates new form StokFrame
      */
-    public StokFrame() {
+public StokFrame() {
         initComponents();
+
+        controller = new StokController();
+
         getContentPane().setBackground(new java.awt.Color(51,51,51));
-        
+
+        tampilData();
         tableWidth();
-        
+
         tblStok.setRowHeight(25);
         tblStok.setShowGrid(false);
         tblStok.setSelectionBackground(new java.awt.Color(51,51,51));
         tblStok.getTableHeader().setFont(
-            new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+                new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
     }
-    
     private void tableWidth() {
         tblStok.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-        tblStok.getColumnModel().getColumn(0).setPreferredWidth(30);   // ID
-        tblStok.getColumnModel().getColumn(1).setPreferredWidth(220);  // Nama Produk
-        tblStok.getColumnModel().getColumn(2).setPreferredWidth(60);   // Satuan
-        tblStok.getColumnModel().getColumn(3).setPreferredWidth(75);   // Stok
-        tblStok.getColumnModel().getColumn(4).setPreferredWidth(120);  // Update
+        tblStok.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tblStok.getColumnModel().getColumn(1).setPreferredWidth(220);
+        tblStok.getColumnModel().getColumn(2).setPreferredWidth(60);
+        tblStok.getColumnModel().getColumn(3).setPreferredWidth(75);
+        tblStok.getColumnModel().getColumn(4).setPreferredWidth(120);
+    }
+    
+    private void tampilData() {
+
+        DefaultTableModel model = new DefaultTableModel();
+
+        model.addColumn("ID");
+        model.addColumn("Nama Produk");
+        model.addColumn("Satuan");
+        model.addColumn("Stok Saat Ini");
+        model.addColumn("Update Terakhir");
+
+        List<Stok> daftarStok = controller.getDataStok();
+
+        for (Stok s : daftarStok) {
+
+            model.addRow(new Object[]{
+                s.getIdStok(),
+                s.getNamaProduk(),
+                s.getSatuan(),
+                s.getJumlahStok(),
+                formatTanggal.format(s.getTanggalUpdate())
+            });
+
+        }
+
+        tblStok.setModel(model);
+        tableWidth();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,6 +136,7 @@ public class StokFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblStok);
 
         btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(this::btnRefreshActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,6 +183,11 @@ public class StokFrame extends javax.swing.JFrame {
         new MainFrame().setVisible(true);
         dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        tampilData();
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
     /**
      * @param args the command line arguments

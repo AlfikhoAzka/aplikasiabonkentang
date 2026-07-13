@@ -87,8 +87,10 @@ public class ProduksiFrame extends javax.swing.JFrame {
              ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
-                petaProdukById.put(rs.getInt("id_produk"),
-                        rs.getString("kode_produk") + " - " + rs.getString("nama_produk"));
+                petaProdukById.put(
+                        rs.getInt("id_produk"),
+                        rs.getString("nama_produk")
+                );
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Gagal memuat data produk: " + e.getMessage());
@@ -219,9 +221,20 @@ public class ProduksiFrame extends javax.swing.JFrame {
     }
     
     private void initTable() {
-        String[] header = {"ID Produksi", "Produk", "Jumlah Produksi", "Tanggal"};
+        String[] header = {"ID", "Produk", "Jumlah Produksi", "Tanggal"};
         tableModel = new DefaultTableModel(header, 0);
         tblProduksi.setModel(tableModel);
+        tableWidth();
+    }
+    
+    private void tableWidth() {
+
+        tblProduksi.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+
+        tblProduksi.getColumnModel().getColumn(0).setPreferredWidth(35);
+        tblProduksi.getColumnModel().getColumn(1).setPreferredWidth(190);
+        tblProduksi.getColumnModel().getColumn(2).setPreferredWidth(95);
+        tblProduksi.getColumnModel().getColumn(3).setPreferredWidth(95);
     }
 
     private void loadData() {
@@ -267,7 +280,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProduksi = new com.mycompany.abonkentang.components.Table();
         btnKembali = new com.mycompany.abonkentang.components.Button();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new com.mycompany.abonkentang.components.CardPanel();
         lblDataProduksi = new javax.swing.JLabel();
         btnEdit = new com.mycompany.abonkentang.components.Button();
         lblProduk = new javax.swing.JLabel();

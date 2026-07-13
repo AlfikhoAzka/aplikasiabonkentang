@@ -26,6 +26,7 @@ public class BahanBakuFrame extends javax.swing.JFrame {
         initComponents();
         controller = new BahanBakuController();
         controller.tampilData(tblBahanBaku);
+        tableWidth();
         getContentPane().setBackground(new java.awt.Color(51,51,51));
         lblBahanBaku.setForeground(java.awt.Color.WHITE);
         btnKembali.setForeground(java.awt.Color.WHITE);
@@ -50,6 +51,15 @@ public class BahanBakuFrame extends javax.swing.JFrame {
         btnTambah.setText("Tambah");
         btnKosongkan.setText("Kosongkan");
     }
+    
+    private void tableWidth() {
+    tblBahanBaku.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+    tblBahanBaku.getColumnModel().getColumn(0).setPreferredWidth(40);
+    tblBahanBaku.getColumnModel().getColumn(1).setPreferredWidth(220);
+    tblBahanBaku.getColumnModel().getColumn(2).setPreferredWidth(80);
+    tblBahanBaku.getColumnModel().getColumn(3).setPreferredWidth(70);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,11 +69,11 @@ public class BahanBakuFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = new com.mycompany.abonkentang.components.CardPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBahanBaku = new com.mycompany.abonkentang.components.Table();
         jLabel3 = new javax.swing.JLabel();
-        panelInput = new javax.swing.JPanel();
+        panelInput = new com.mycompany.abonkentang.components.CardPanel();
         lblNamaBahan = new javax.swing.JLabel();
         lblStok = new javax.swing.JLabel();
         lblSatuan = new javax.swing.JLabel();
@@ -77,7 +87,7 @@ public class BahanBakuFrame extends javax.swing.JFrame {
         btnUbah = new com.mycompany.abonkentang.components.Button();
         btnKosongkan = new com.mycompany.abonkentang.components.Button();
         btnKembali = new com.mycompany.abonkentang.components.Button();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new com.mycompany.abonkentang.components.CardPanel();
         txtCari = new javax.swing.JTextField();
         btnCari = new com.mycompany.abonkentang.components.Button();
         btnClear = new com.mycompany.abonkentang.components.Button();
@@ -310,7 +320,7 @@ public class BahanBakuFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 77, 1146, 680));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 77, 1146, 440));
 
         panelTabel.setBackground(new java.awt.Color(17, 46, 129));
 
@@ -338,11 +348,6 @@ public class BahanBakuFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
-        // TODO add your handling code here:
-        new MainFrame().setVisible(true);
-    }//GEN-LAST:event_btnKembaliActionPerformed
-
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
         txtCari.setText("");
@@ -357,6 +362,11 @@ public class BahanBakuFrame extends javax.swing.JFrame {
     private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCariActionPerformed
+
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        // TODO add your handling code here:
+        new MainFrame().setVisible(true);
+    }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void btnKosongkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKosongkanActionPerformed
         // TODO add your handling code here:

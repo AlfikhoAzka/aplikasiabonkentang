@@ -34,6 +34,16 @@ public class ProdukFrame extends javax.swing.JFrame {
         tampilData(); 
     }
     
+    private void tableWidth() {
+    tblProduk.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+    tblProduk.getColumnModel().getColumn(0).setPreferredWidth(85);
+    tblProduk.getColumnModel().getColumn(1).setPreferredWidth(200);
+    tblProduk.getColumnModel().getColumn(2).setPreferredWidth(150);
+    tblProduk.getColumnModel().getColumn(3).setPreferredWidth(70);
+    tblProduk.getColumnModel().getColumn(4).setPreferredWidth(120);
+}
+    
     private void resetForm() {
         txtKodeProduk.setText("");
         txtNamaProduk.setText("");
@@ -50,7 +60,7 @@ public class ProdukFrame extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
 
-    model.addColumn("Kode Produk");
+    model.addColumn("Kode");
     model.addColumn("Nama Produk");
     model.addColumn("Kategori");
     model.addColumn("Satuan");
@@ -73,6 +83,7 @@ public class ProdukFrame extends javax.swing.JFrame {
         }
 
         tblProduk.setModel(model);
+        tableWidth();
 
     } catch (Exception e) {
         System.out.println("Gagal tampil data : " + e.getMessage());
@@ -104,7 +115,7 @@ public class ProdukFrame extends javax.swing.JFrame {
         txtHargaJual = new javax.swing.JTextField();
         jLabel6 = new com.mycompany.abonkentang.components.Label();
         cmbSatuan = new javax.swing.JComboBox<>();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new com.mycompany.abonkentang.components.CardPanel();
         lblDataProduk = new com.mycompany.abonkentang.components.TitleLabel();
         btnKembali = new com.mycompany.abonkentang.components.Button();
 

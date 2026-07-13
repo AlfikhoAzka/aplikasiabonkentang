@@ -17,6 +17,8 @@ public class Produk {
     private String satuan;
     private double hargaJual;
 
+    private int stok;
+
     public Produk() {
     }
 
@@ -66,5 +68,13 @@ public class Produk {
 
     public void setHargaJual(double hargaJual) {
         this.hargaJual = hargaJual;
+    }
+
+    public int getStok() {
+        return stok;
+    }
+
+    public void setStok(int stok) {
+        this.stok = stok;
     }
 }

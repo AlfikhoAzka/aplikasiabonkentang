@@ -253,6 +253,9 @@
               </Table>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.mycompany.abonkentang.components.Table()"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

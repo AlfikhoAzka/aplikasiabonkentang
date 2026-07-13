@@ -61,7 +61,7 @@ public class BahanBakuFrame extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblBahanBaku = new javax.swing.JTable();
+        tblBahanBaku = new com.mycompany.abonkentang.components.Table();
         jLabel3 = new javax.swing.JLabel();
         panelInput = new javax.swing.JPanel();
         lblNamaBahan = new javax.swing.JLabel();

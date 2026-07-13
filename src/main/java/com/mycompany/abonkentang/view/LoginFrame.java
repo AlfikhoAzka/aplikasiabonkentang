@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.abonkentang.view;
+import com.mycompany.abonkentang.config.Sesi;
 import com.mycompany.abonkentang.controller.LoginController;
 import com.mycompany.abonkentang.model.User;
 
@@ -182,6 +183,7 @@ public class LoginFrame extends javax.swing.JFrame {
         User user = controller.login(username, password);
 
         if (user != null) {
+            Sesi.setUser(user);
             javax.swing.JOptionPane.showMessageDialog(this, "Login Berhasil! Selamat datang, " + user.getNamaLengkap());
             new MainFrame().setVisible(true);
             this.dispose();

@@ -265,7 +265,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProduksi = new javax.swing.JTable();
+        tblProduksi = new com.mycompany.abonkentang.components.Table();
         btnKembali = new com.mycompany.abonkentang.components.Button();
         jPanel1 = new javax.swing.JPanel();
         lblDataProduksi = new javax.swing.JLabel();

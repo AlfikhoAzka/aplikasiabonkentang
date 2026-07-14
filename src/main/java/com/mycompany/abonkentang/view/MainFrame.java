@@ -6,7 +6,7 @@ package com.mycompany.abonkentang.view;
 
 /**
  *
- * @author Alfikho Azka
+ * @author Alfikho Azka Dinova - 10125107
  */
 public class MainFrame extends javax.swing.JFrame {
     
@@ -32,8 +32,8 @@ public class MainFrame extends javax.swing.JFrame {
         mnuMasterData = new javax.swing.JMenu();
         mnuBahanBaku = new javax.swing.JMenuItem();
         mnuProduk = new javax.swing.JMenuItem();
-        mnuTransaksi = new javax.swing.JMenu();
         mnuProduksi = new javax.swing.JMenuItem();
+        mnuTransaksi = new javax.swing.JMenu();
         mnuPenjualan = new javax.swing.JMenuItem();
         mnuStok = new javax.swing.JMenu();
         mnuDataStok = new javax.swing.JMenuItem();
@@ -55,13 +55,13 @@ public class MainFrame extends javax.swing.JFrame {
         mnuProduk.addActionListener(this::mnuProdukActionPerformed);
         mnuMasterData.add(mnuProduk);
 
+        mnuProduksi.setText("Produksi");
+        mnuProduksi.addActionListener(this::mnuProduksiActionPerformed);
+        mnuMasterData.add(mnuProduksi);
+
         jMenuBar1.add(mnuMasterData);
 
         mnuTransaksi.setText("Transaksi");
-
-        mnuProduksi.setText("Produksi");
-        mnuProduksi.addActionListener(this::mnuProduksiActionPerformed);
-        mnuTransaksi.add(mnuProduksi);
 
         mnuPenjualan.setText("Penjualan");
         mnuPenjualan.setToolTipText("");
@@ -114,36 +114,43 @@ public class MainFrame extends javax.swing.JFrame {
     private void mnuBahanBakuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBahanBakuActionPerformed
         // TODO add your handling code here:
         new BahanBakuFrame().setVisible(true);
+        dispose();
     }//GEN-LAST:event_mnuBahanBakuActionPerformed
 
     private void mnuProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdukActionPerformed
         // TODO add your handling code here:
         new ProdukFrame().setVisible(true);
+        dispose();
     }//GEN-LAST:event_mnuProdukActionPerformed
 
     private void mnuProduksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProduksiActionPerformed
         // TODO add your handling code here:
         new ProduksiFrame().setVisible(true);
+        dispose();
     }//GEN-LAST:event_mnuProduksiActionPerformed
 
     private void mnuPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPenjualanActionPerformed
         // TODO add your handling code here:
         new TransaksiFrame().setVisible(true);
+        dispose();
     }//GEN-LAST:event_mnuPenjualanActionPerformed
 
     private void mnuDataStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDataStokActionPerformed
         // TODO add your handling code here:
         new StokFrame().setVisible(true);
+        dispose();
     }//GEN-LAST:event_mnuDataStokActionPerformed
 
     private void mnuLaporanProduksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLaporanProduksiActionPerformed
         // TODO add your handling code here:
         new LaporanProduksiFrame().setVisible(true);
+        dispose();
     }//GEN-LAST:event_mnuLaporanProduksiActionPerformed
 
     private void mnuLaporanPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLaporanPenjualanActionPerformed
         // TODO add your handling code here:
         new LaporanPenjualanFrame().setVisible(true);
+        dispose();
     }//GEN-LAST:event_mnuLaporanPenjualanActionPerformed
 
     private void mnuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLogoutActionPerformed

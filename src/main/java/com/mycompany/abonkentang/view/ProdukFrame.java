@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Rassya Haikal Firdaus - 10125037, Alfikho Azka Dinova 10125107
+ * @author Rassya Haikal Firdaus - 10125037, Alfikho Azka Dinova - 10125107
  */
 public class ProdukFrame extends javax.swing.JFrame {
     
@@ -25,6 +25,7 @@ public class ProdukFrame extends javax.swing.JFrame {
     private String kodeProdukTerpilih;
     public ProdukFrame() {
         initComponents();
+        cmbSatuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kg", "Liter", "Pcs", "Pack" }));
         tblProduk.setRowHeight(25);
         tblProduk.setShowGrid(false);
         tblProduk.setSelectionBackground(new java.awt.Color(51, 51, 51));

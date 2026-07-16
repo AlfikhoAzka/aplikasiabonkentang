@@ -119,6 +119,10 @@ public class ProdukFrame extends javax.swing.JFrame {
         jPanel1 = new com.mycompany.abonkentang.components.CardPanel();
         lblDataProduk = new com.mycompany.abonkentang.components.TitleLabel();
         btnKembali = new com.mycompany.abonkentang.components.Button();
+        cmbKolomCari = new com.mycompany.abonkentang.components.ComboBox<>();
+        txtCariProduk = new javax.swing.JTextField();
+        btnCariProduk = new com.mycompany.abonkentang.components.Button();
+        btnRefresh = new com.mycompany.abonkentang.components.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -193,6 +197,16 @@ public class ProdukFrame extends javax.swing.JFrame {
         btnKembali.setText("Kembali");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
+        cmbKolomCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kode Produk", "Nama Produk", "Kategori" }));
+
+        txtCariProduk.setText("Cari Produk");
+
+        btnCariProduk.setText("Cari");
+        btnCariProduk.addActionListener(this::btnCariProdukActionPerformed);
+
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(this::btnRefreshActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,13 +215,12 @@ public class ProdukFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 67, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnRefresh)
+                                .addGap(37, 37, 37)
                                 .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
                                 .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,16 +251,30 @@ public class ProdukFrame extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btnBersih, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(31, 31, 31)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40))))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCariProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(40, 40, 40))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbKolomCari, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCariProduk)
+                        .addGap(44, 44, 44))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbKolomCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCariProduk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCariProduk)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -277,8 +304,9 @@ public class ProdukFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEdit)
-                    .addComponent(btnHapus))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(btnHapus)
+                    .addComponent(btnRefresh))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -400,6 +428,43 @@ public class ProdukFrame extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
 
+    private void btnCariProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariProdukActionPerformed
+        // TODO add your handling code here:
+        String keyword = txtCariProduk.getText().trim();
+        String pilihan = (String) cmbKolomCari.getSelectedItem();
+
+        if (keyword.isEmpty()) {
+            tampilData();
+            return;
+        }
+
+        String kolom;
+        switch (pilihan) {
+            case "Kode Produk": kolom = "kode_produk"; break;
+            case "Kategori": kolom = "kategori"; break;
+            default: kolom = "nama_produk"; break;
+        }
+
+        try {
+            List<Produk> hasil = controller.cariProduk(keyword, kolom);
+            DefaultTableModel model = (DefaultTableModel) tblProduk.getModel();
+            model.setRowCount(0);
+            for (Produk p : hasil) {
+                model.addRow(new Object[]{
+                    p.getKodeProduk(), p.getNamaProduk(), p.getKategori(),
+                    p.getSatuan(), p.getHargaJual()
+                });
+            }
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_btnCariProdukActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        tampilData();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -427,10 +492,13 @@ public class ProdukFrame extends javax.swing.JFrame {
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBersih;
+    private javax.swing.JButton btnCariProduk;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKembali;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnTambah;
+    private javax.swing.JComboBox<String> cmbKolomCari;
     private javax.swing.JComboBox<String> cmbSatuan;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -441,6 +509,7 @@ public class ProdukFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDataProduk;
     private javax.swing.JTable tblProduk;
+    private javax.swing.JTextField txtCariProduk;
     private javax.swing.JTextField txtHargaJual;
     private javax.swing.JTextField txtKategori;
     private javax.swing.JTextField txtKodeProduk;

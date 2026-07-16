@@ -107,5 +107,36 @@ public class ProdukController {
             return false;
         }
     }
+    
+    public java.util.List<Produk> cariProduk(String keyword, String kolom) {
+        java.util.List<Produk> list = new ArrayList<>();
+        java.util.List<String> kolomDiizinkan = java.util.List.of("kode_produk", "nama_produk", "kategori");
+
+        if (!kolomDiizinkan.contains(kolom)) {
+            throw new IllegalArgumentException("Kolom pencarian tidak valid: " + kolom);
+        }
+
+        String sql = "SELECT * FROM produk WHERE " + kolom + " LIKE ? ORDER BY nama_produk";
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + keyword + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Produk p = new Produk();
+                    p.setIdProduk(rs.getInt("id_produk"));
+                    p.setKodeProduk(rs.getString("kode_produk"));
+                    p.setNamaProduk(rs.getString("nama_produk"));
+                    p.setKategori(rs.getString("kategori"));
+                    p.setSatuan(rs.getString("satuan"));
+                    p.setHargaJual(rs.getDouble("harga_jual"));
+                    list.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Pencarian gagal: " + e.getMessage(), e);
+        }
+        return list;
+    }
 
 }

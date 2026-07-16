@@ -4,8 +4,7 @@
 
 package com.mycompany.abonkentang;
 
-import com.mycompany.abonkentang.config.koneksi;
-import java.sql.Connection;
+import com.mycompany.abonkentang.view.LoginFrame;
 
 /**
  *
@@ -13,12 +12,23 @@ import java.sql.Connection;
  */
 public class Abonkentang {
 
+    private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(Abonkentang.class.getName());
+
     public static void main(String[] args) {
-        Connection conn = koneksi.getKoneksi();
-        if (conn != null) {
-            System.out.println("Koneksi berhasil!");
-        } else {
-            System.out.println("Koneksi gagal.");
+        /* Set the Nimbus look and feel */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
+
+        /* Buka halaman Login sebagai titik masuk aplikasi */
+        java.awt.EventQueue.invokeLater(() -> new LoginFrame().setVisible(true));
     }
 }

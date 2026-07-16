@@ -17,6 +17,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(51,51,51));
     }
 
     /**
@@ -28,142 +29,215 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        mnuMasterData = new javax.swing.JMenu();
-        mnuBahanBaku = new javax.swing.JMenuItem();
-        mnuProduk = new javax.swing.JMenuItem();
-        mnuProduksi = new javax.swing.JMenuItem();
-        mnuTransaksi = new javax.swing.JMenu();
-        mnuPenjualan = new javax.swing.JMenuItem();
-        mnuStok = new javax.swing.JMenu();
-        mnuDataStok = new javax.swing.JMenuItem();
-        mnuLaporan = new javax.swing.JMenu();
-        mnuLaporanProduksi = new javax.swing.JMenuItem();
-        mnuLaporanPenjualan = new javax.swing.JMenuItem();
-        mnuLogout = new javax.swing.JMenu();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        menuLaporanPenjualan = new javax.swing.JMenuItem();
+        menuLaporanProduksi = new javax.swing.JMenuItem();
+        btnBahanBaku = new com.mycompany.abonkentang.components.Button();
+        btnProduk = new com.mycompany.abonkentang.components.Button();
+        btnProduksi = new com.mycompany.abonkentang.components.Button();
+        btnTransaksi = new com.mycompany.abonkentang.components.Button();
+        btnStok = new com.mycompany.abonkentang.components.Button();
+        btnLaporan = new com.mycompany.abonkentang.components.Button();
+        cardPanel1 = new com.mycompany.abonkentang.components.CardPanel();
+        lblTitle = new com.mycompany.abonkentang.components.TitleLabel();
+        lblSelamatDatang = new com.mycompany.abonkentang.components.Label();
+        jPanel1 = new com.mycompany.abonkentang.components.CardPanel();
+        jPanel2 = new com.mycompany.abonkentang.components.CardPanel();
+        jPanel3 = new com.mycompany.abonkentang.components.CardPanel();
+
+        menuLaporanPenjualan.setText("Laporan Penjualan");
+        menuLaporanPenjualan.addActionListener(this::menuLaporanPenjualanActionPerformed);
+        jPopupMenu2.add(menuLaporanPenjualan);
+
+        menuLaporanProduksi.setText("Laporan Produksi");
+        menuLaporanProduksi.addActionListener(this::menuLaporanProduksiActionPerformed);
+        jPopupMenu2.add(menuLaporanProduksi);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        mnuMasterData.setText("Master Data");
+        btnBahanBaku.setText("Bahan Baku");
+        btnBahanBaku.addActionListener(this::btnBahanBakuActionPerformed);
 
-        mnuBahanBaku.setText("Bahan Baku");
-        mnuBahanBaku.addActionListener(this::mnuBahanBakuActionPerformed);
-        mnuMasterData.add(mnuBahanBaku);
+        btnProduk.setText("Produk");
+        btnProduk.addActionListener(this::btnProdukActionPerformed);
 
-        mnuProduk.setText("Produk");
-        mnuProduk.setToolTipText("");
-        mnuProduk.addActionListener(this::mnuProdukActionPerformed);
-        mnuMasterData.add(mnuProduk);
+        btnProduksi.setText("Produksi");
+        btnProduksi.addActionListener(this::btnProduksiActionPerformed);
 
-        mnuProduksi.setText("Produksi");
-        mnuProduksi.addActionListener(this::mnuProduksiActionPerformed);
-        mnuMasterData.add(mnuProduksi);
+        btnTransaksi.setText("Transaksi");
+        btnTransaksi.addActionListener(this::btnTransaksiActionPerformed);
 
-        jMenuBar1.add(mnuMasterData);
+        btnStok.setText("Stok");
+        btnStok.addActionListener(this::btnStokActionPerformed);
 
-        mnuTransaksi.setText("Transaksi");
+        btnLaporan.setText("Laporan");
+        btnLaporan.addActionListener(this::btnLaporanActionPerformed);
 
-        mnuPenjualan.setText("Penjualan");
-        mnuPenjualan.setToolTipText("");
-        mnuPenjualan.addActionListener(this::mnuPenjualanActionPerformed);
-        mnuTransaksi.add(mnuPenjualan);
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("Sistem Pengelolaan Abon Kentang");
 
-        jMenuBar1.add(mnuTransaksi);
+        lblSelamatDatang.setText("Selamat Datang");
 
-        mnuStok.setText("Stok");
+        javax.swing.GroupLayout cardPanel1Layout = new javax.swing.GroupLayout(cardPanel1);
+        cardPanel1.setLayout(cardPanel1Layout);
+        cardPanel1Layout.setHorizontalGroup(
+            cardPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardPanel1Layout.createSequentialGroup()
+                .addComponent(lblSelamatDatang)
+                .addGap(352, 352, 352))
+        );
+        cardPanel1Layout.setVerticalGroup(
+            cardPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(lblTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSelamatDatang)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
 
-        mnuDataStok.setText("Data Stok");
-        mnuDataStok.setToolTipText("");
-        mnuDataStok.addActionListener(this::mnuDataStokActionPerformed);
-        mnuStok.add(mnuDataStok);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 124, Short.MAX_VALUE)
+        );
 
-        jMenuBar1.add(mnuStok);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        mnuLaporan.setText("Laporan");
-
-        mnuLaporanProduksi.setText("Laporan Produksi");
-        mnuLaporanProduksi.addActionListener(this::mnuLaporanProduksiActionPerformed);
-        mnuLaporan.add(mnuLaporanProduksi);
-
-        mnuLaporanPenjualan.setText("Laporan Penjualan");
-        mnuLaporanPenjualan.addActionListener(this::mnuLaporanPenjualanActionPerformed);
-        mnuLaporan.add(mnuLaporanPenjualan);
-
-        jMenuBar1.add(mnuLaporan);
-
-        mnuLogout.setText("Logout");
-        mnuLogout.addActionListener(this::mnuLogoutActionPerformed);
-        jMenuBar1.add(mnuLogout);
-
-        setJMenuBar(jMenuBar1);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 970, Short.MAX_VALUE)
+            .addComponent(cardPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBahanBaku, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(btnStok, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnLaporan, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(btnProduksi, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 578, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(cardPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBahanBaku, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProduksi, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnStok, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mnuBahanBakuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBahanBakuActionPerformed
+    private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
         // TODO add your handling code here:
-        new BahanBakuFrame().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_mnuBahanBakuActionPerformed
+        jPopupMenu2.show(btnLaporan, 0, btnLaporan.getHeight());
+    }//GEN-LAST:event_btnLaporanActionPerformed
 
-    private void mnuProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdukActionPerformed
+    private void menuLaporanPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLaporanPenjualanActionPerformed
         // TODO add your handling code here:
-        new ProdukFrame().setVisible(true);
+        LaporanPenjualanFrame laporan = new LaporanPenjualanFrame();
+        laporan.setLocationRelativeTo(this);
+        laporan.setVisible(true);
         dispose();
-    }//GEN-LAST:event_mnuProdukActionPerformed
+    }//GEN-LAST:event_menuLaporanPenjualanActionPerformed
 
-    private void mnuProduksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProduksiActionPerformed
+    private void menuLaporanProduksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLaporanProduksiActionPerformed
         // TODO add your handling code here:
-        new ProduksiFrame().setVisible(true);
+        LaporanProduksiFrame laporan = new LaporanProduksiFrame();
+        laporan.setLocationRelativeTo(this);
+        laporan.setVisible(true);
         dispose();
-    }//GEN-LAST:event_mnuProduksiActionPerformed
+    }//GEN-LAST:event_menuLaporanProduksiActionPerformed
 
-    private void mnuPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPenjualanActionPerformed
+    private void btnBahanBakuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBahanBakuActionPerformed
         // TODO add your handling code here:
-        new TransaksiFrame().setVisible(true);
+        BahanBakuFrame bahan = new BahanBakuFrame();
+        bahan.setLocationRelativeTo(this);
+        bahan.setVisible(true);
         dispose();
-    }//GEN-LAST:event_mnuPenjualanActionPerformed
+    }//GEN-LAST:event_btnBahanBakuActionPerformed
 
-    private void mnuDataStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDataStokActionPerformed
+    private void btnProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdukActionPerformed
         // TODO add your handling code here:
-        new StokFrame().setVisible(true);
+        ProdukFrame produk = new ProdukFrame();
+        produk.setLocationRelativeTo(this);
+        produk.setVisible(true);
         dispose();
-    }//GEN-LAST:event_mnuDataStokActionPerformed
+    }//GEN-LAST:event_btnProdukActionPerformed
 
-    private void mnuLaporanProduksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLaporanProduksiActionPerformed
+    private void btnProduksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProduksiActionPerformed
         // TODO add your handling code here:
-        new LaporanProduksiFrame().setVisible(true);
+        ProduksiFrame produksi = new ProduksiFrame();
+        produksi.setLocationRelativeTo(this);
+        produksi.setVisible(true);
         dispose();
-    }//GEN-LAST:event_mnuLaporanProduksiActionPerformed
+    }//GEN-LAST:event_btnProduksiActionPerformed
 
-    private void mnuLaporanPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLaporanPenjualanActionPerformed
+    private void btnTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransaksiActionPerformed
         // TODO add your handling code here:
-        new LaporanPenjualanFrame().setVisible(true);
+        TransaksiFrame transaksi = new TransaksiFrame();
+        transaksi.setLocationRelativeTo(this);
+        transaksi.setVisible(true);
         dispose();
-    }//GEN-LAST:event_mnuLaporanPenjualanActionPerformed
+    }//GEN-LAST:event_btnTransaksiActionPerformed
 
-    private void mnuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLogoutActionPerformed
+    private void btnStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStokActionPerformed
         // TODO add your handling code here:
-        int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(
-                this, "Yakin ingin logout?", "Konfirmasi Logout",
-                javax.swing.JOptionPane.YES_NO_OPTION);
-        if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
-            com.mycompany.abonkentang.config.Sesi.logout();
-            new LoginFrame().setVisible(true);
-            this.dispose();
-        }
-    }//GEN-LAST:event_mnuLogoutActionPerformed
+        StokFrame stok = new StokFrame();
+        stok.setLocationRelativeTo(this);
+        stok.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnStokActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,18 +265,20 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem mnuBahanBaku;
-    private javax.swing.JMenuItem mnuDataStok;
-    private javax.swing.JMenu mnuLaporan;
-    private javax.swing.JMenuItem mnuLaporanPenjualan;
-    private javax.swing.JMenuItem mnuLaporanProduksi;
-    private javax.swing.JMenu mnuLogout;
-    private javax.swing.JMenu mnuMasterData;
-    private javax.swing.JMenuItem mnuPenjualan;
-    private javax.swing.JMenuItem mnuProduk;
-    private javax.swing.JMenuItem mnuProduksi;
-    private javax.swing.JMenu mnuStok;
-    private javax.swing.JMenu mnuTransaksi;
+    private javax.swing.JButton btnBahanBaku;
+    private javax.swing.JButton btnLaporan;
+    private javax.swing.JButton btnProduk;
+    private javax.swing.JButton btnProduksi;
+    private javax.swing.JButton btnStok;
+    private javax.swing.JButton btnTransaksi;
+    private com.mycompany.abonkentang.components.CardPanel cardPanel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPopupMenu jPopupMenu2;
+    private javax.swing.JLabel lblSelamatDatang;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JMenuItem menuLaporanPenjualan;
+    private javax.swing.JMenuItem menuLaporanProduksi;
     // End of variables declaration//GEN-END:variables
 }

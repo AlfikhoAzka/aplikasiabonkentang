@@ -36,14 +36,10 @@ public class LaporanProduksiFrame extends javax.swing.JFrame {
      */
     public LaporanProduksiFrame() {
         initComponents();
-
         controller = new LaporanController();
-
         getContentPane().setBackground(new java.awt.Color(51,51,51));
-
         tampilData();
         tableWidth();
-
         tblLaporan.setRowHeight(25);
         tblLaporan.setShowGrid(false);
         tblLaporan.setSelectionBackground(new java.awt.Color(51,51,51));

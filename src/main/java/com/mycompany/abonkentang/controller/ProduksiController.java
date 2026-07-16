@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -237,6 +238,25 @@ public class ProduksiController {
             ps.setInt(1, idProduksi);
             ps.executeUpdate();
         }
+    }
+    
+    public Map<Integer, Double> getBahanDipakai(int idProduksi) {
+        Map<Integer, Double> hasil = new LinkedHashMap<>();
+        String sql = "SELECT id_bahan, jumlah_dipakai FROM detail_produksi_bahan WHERE id_produksi = ?";
+
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idProduksi);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    hasil.put(rs.getInt("id_bahan"), rs.getDouble("jumlah_dipakai"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Gagal mengambil data bahan baku produksi: " + e.getMessage(), e);
+        }
+
+        return hasil;
     }
 
     public List<BahanBaku> daftarBahanBaku() {

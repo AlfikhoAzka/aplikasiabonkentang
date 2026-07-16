@@ -396,6 +396,11 @@ public class ProdukFrame extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Harga Jual harus berupa angka!");
             return;
         }
+        
+        if (harga <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Harga Jual harus lebih besar dari 0!");
+            return;
+        }
 
         Produk produk = new Produk();
         produk.setKodeProduk(kode);

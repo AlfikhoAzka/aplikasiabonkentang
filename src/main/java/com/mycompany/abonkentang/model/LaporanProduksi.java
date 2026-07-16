@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  *
- * @author Kelompok 6
+ * @author Alfikho Azka Dinova - 10125107
  */
 public class LaporanProduksi {
 

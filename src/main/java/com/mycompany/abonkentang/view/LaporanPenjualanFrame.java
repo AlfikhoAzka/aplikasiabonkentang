@@ -3,20 +3,87 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.abonkentang.view;
+import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
+import com.mycompany.abonkentang.controller.LaporanController;
+import com.mycompany.abonkentang.model.LaporanPenjualan;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+import java.io.File;
+import java.io.FileOutputStream;
+import javax.swing.JFileChooser;
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 
 /**
  *
- * @author Alfikho Azka
+ * @author Alfikho Azka Dinova - 10125107
  */
 public class LaporanPenjualanFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LaporanPenjualanFrame.class.getName());
+    private LaporanController controller;
+    private final SimpleDateFormat formatTanggal = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    private final DecimalFormat formatRupiah = new DecimalFormat("#,##0");
 
     /**
      * Creates new form LaporanPenjualanFrame
      */
     public LaporanPenjualanFrame() {
         initComponents();
+        controller = new LaporanController();
+        getContentPane().setBackground(new java.awt.Color(51,51,51));
+        tampilData();
+        tableWidth();
+        jTable1.setRowHeight(25);
+        jTable1.setShowGrid(false);
+        jTable1.setSelectionBackground(new java.awt.Color(51,51,51));
+        jTable1.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+    }
+    
+    private void tableWidth() {
+        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(220);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(90);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
+    }
+    
+    private void tampilData() {
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        model.addColumn("Tanggal");
+        model.addColumn("Nama Produk");
+        model.addColumn("Jumlah");
+        model.addColumn("Subtotal");
+
+        List<LaporanPenjualan> daftarLaporan = controller.getLaporanPenjualan();
+        double totalSubtotal = 0;
+
+        for (LaporanPenjualan lp : daftarLaporan) {
+            model.addRow(new Object[]{
+                formatTanggal.format(lp.getTanggal()),
+                lp.getNamaProduk(),
+                lp.getJumlah(),
+                "Rp " + formatRupiah.format(lp.getSubtotal())
+            });
+            totalSubtotal += lp.getSubtotal();
+        }
+
+        jTable1.setModel(model);
+        lblPenjualan.setText("Total Penjualan: Rp " + formatRupiah.format(totalSubtotal));
+        tableWidth();
     }
 
     /**
@@ -28,21 +95,161 @@ public class LaporanPenjualanFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        lblLaporanPenjualan = new com.mycompany.abonkentang.components.TitleLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new com.mycompany.abonkentang.components.Table();
+        btnKembali = new com.mycompany.abonkentang.components.Button();
+        btnRefresh = new com.mycompany.abonkentang.components.Button();
+        btnExport = new com.mycompany.abonkentang.components.Button();
+        lblPenjualan = new com.mycompany.abonkentang.components.Label();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(17, 46, 129));
+
+        lblLaporanPenjualan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLaporanPenjualan.setText("Laporan Penjualan");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblLaporanPenjualan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(lblLaporanPenjualan)
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Tanggal", "Nama Produk", "Jumlah", "Subtotal"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        btnKembali.setText("Kembali");
+        btnKembali.addActionListener(this::btnKembaliActionPerformed);
+
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(this::btnRefreshActionPerformed);
+
+        btnExport.setText("Export as PDF");
+        btnExport.addActionListener(this::btnExportActionPerformed);
+
+        lblPenjualan.setText("Total Penjualan:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(92, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPenjualan)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnKembali)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnRefresh)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnExport))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 959, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(81, 81, 81))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnKembali)
+                    .addComponent(btnRefresh)
+                    .addComponent(btnExport))
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPenjualan)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        // TODO add your handling code here:
+        new MainFrame().setVisible(true);
+        dispose();  
+    }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        tampilData();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File("laporan_penjualan.pdf"));
+        int pilihan = fileChooser.showSaveDialog(this);
+        if (pilihan != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        File file = fileChooser.getSelectedFile();
+
+        try {
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(file));
+            document.open();
+
+            Font fontJudul = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
+            Paragraph judul = new Paragraph("Laporan Penjualan", fontJudul);
+            judul.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(judul);
+            document.add(new Paragraph(" "));
+
+            PdfPTable tabel = new PdfPTable(4);
+            tabel.setWidthPercentage(100);
+
+            Font fontHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 11);
+            String[] header = {"Tanggal", "Nama Produk", "Jumlah", "Subtotal"};
+            for (String h : header) {
+                tabel.addCell(new PdfPCell(new Phrase(h, fontHeader)));
+            }
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    tabel.addCell(String.valueOf(model.getValueAt(i, j)));
+                }
+            }
+
+            document.add(tabel);
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(lblPenjualan.getText()));
+            document.close();
+
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Laporan berhasil disimpan ke:\n" + file.getAbsolutePath(),
+                    "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Gagal membuat PDF: " + e.getMessage(),
+                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +277,13 @@ public class LaporanPenjualanFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExport;
+    private javax.swing.JButton btnKembali;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblLaporanPenjualan;
+    private javax.swing.JLabel lblPenjualan;
     // End of variables declaration//GEN-END:variables
 }

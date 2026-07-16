@@ -42,6 +42,9 @@ public class ProduksiFrame extends javax.swing.JFrame {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private int idProduksiTerpilih = -1;
     private int idProdukTerpilih = -1;
+    private int idProdukAwal = -1;
+    private int jumlahProduksiAwal = -1;
+    private String tanggalAwal = "";
     private final Map<Integer, String> petaProdukById = new LinkedHashMap<>();
     private List<Produksi> daftarProduksi = new ArrayList<>();
     private boolean modeEdit = false;
@@ -119,13 +122,15 @@ public class ProduksiFrame extends javax.swing.JFrame {
         return label != null ? label : "(Produk dengan ID " + idProduk + " tidak ditemukan)";
     }
     
-    private Map<Integer, Double> pilihBahanBaku() {
+    private Map<Integer, Double> pilihBahanBaku(Map<Integer, Double> bahanAwal) {
         List<BahanBaku> daftarBahan = controller.daftarBahanBaku();
-        Map<Integer, Double> hasil = new LinkedHashMap<>();
+        Map<Integer, Double> hasil = new LinkedHashMap<>(bahanAwal);
 
         if (daftarBahan.isEmpty()) {
             return hasil;
         }
+
+        boolean sudahAdaData = !hasil.isEmpty();
 
         while (true) {
             javax.swing.JComboBox<BahanBaku> cboBahan = new javax.swing.JComboBox<>(daftarBahan.toArray(new BahanBaku[0]));
@@ -133,8 +138,13 @@ public class ProduksiFrame extends javax.swing.JFrame {
 
             Object[] isi = { "Bahan baku:", cboBahan, "Jumlah dipakai:", txtJumlah };
 
+            String judul = sudahAdaData
+                ? "Bahan Baku yang Dipakai (sudah ada " + hasil.size()
+                    + " bahan tercatat. Klik Cancel untuk membiarkan seperti semula)"
+                : "Bahan Baku yang Dipakai (opsional)";
+
             int pilihan = JOptionPane.showConfirmDialog(this, isi,
-                "Bahan Baku yang Dipakai (opsional)", JOptionPane.OK_CANCEL_OPTION);
+                judul, JOptionPane.OK_CANCEL_OPTION);
 
             if (pilihan != JOptionPane.OK_OPTION) {
                 break;
@@ -148,6 +158,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
                 }
                 BahanBaku bb = (BahanBaku) cboBahan.getSelectedItem();
                 hasil.merge(bb.getIdBahan(), jumlah, Double::sum);
+                sudahAdaData = true;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Jumlah harus berupa angka!");
                 continue;
@@ -634,7 +645,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
                 p.setTanggalProduksi(
                     dateFormat.parse(txtTanggal.getText()));
 
-                Map<Integer, Double> bahanDipakai = pilihBahanBaku();
+                Map<Integer, Double> bahanDipakai = pilihBahanBaku(new LinkedHashMap<>());
                 controller.tambahProduksi(p, bahanDipakai);
 
                 JOptionPane.showMessageDialog(this,
@@ -675,7 +686,21 @@ public class ProduksiFrame extends javax.swing.JFrame {
                 p.setTanggalProduksi(
                     dateFormat.parse(txtTanggal.getText()));
 
-                Map<Integer, Double> bahanDipakai = pilihBahanBaku();
+                Map<Integer, Double> bahanSebelumnya = controller.getBahanDipakai(idProduksiTerpilih);
+                Map<Integer, Double> bahanDipakai = pilihBahanBaku(bahanSebelumnya);
+
+                boolean tidakAdaPerubahan =
+                    idProdukTerpilih == idProdukAwal
+                    && jumlahProduksi == jumlahProduksiAwal
+                    && txtTanggal.getText().equals(tanggalAwal)
+                    && bahanDipakai.equals(bahanSebelumnya);
+
+                if (tidakAdaPerubahan) {
+                    JOptionPane.showMessageDialog(this, "Tidak ada data yang diubah.");
+                    bersihForm();
+                    return;
+                }
+
                 controller.ubahProduksi(p, bahanDipakai);
 
                 JOptionPane.showMessageDialog(this,
@@ -718,6 +743,9 @@ public class ProduksiFrame extends javax.swing.JFrame {
         }
 
         idProdukTerpilih = p.getIdProduk();
+        idProdukAwal = p.getIdProduk();
+        jumlahProduksiAwal = p.getJumlahProduksi();
+        tanggalAwal = dateFormat.format(p.getTanggalProduksi());
 
         txtIdProduk.setText(namaProduk(p.getIdProduk()));
         txtIdJumlahProduksi.setText(String.valueOf(p.getJumlahProduksi()));

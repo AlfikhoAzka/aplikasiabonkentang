@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class ProduksiController {
 
-    private static final List<String> KOLOM_DIIZINKAN = List.of("id_produksi", "id_produk");
-
     public void tambahProduksi(Produksi p) {
         String sqlInsert = "INSERT INTO produksi (id_produk, jumlah_produksi, tanggal_produksi) VALUES (?, ?, ?)";
 
@@ -151,12 +149,18 @@ public class ProduksiController {
 
     public List<Produksi> cariProduksi(String keyword, String kolom) {
         List<Produksi> list = new ArrayList<>();
+        String sql;
 
-        if (!KOLOM_DIIZINKAN.contains(kolom)) {
+        if (kolom.equals("nama_produk")) {
+            sql = "SELECT pr.* FROM produksi pr "
+                + "JOIN produk p ON p.id_produk = pr.id_produk "
+                + "WHERE p.nama_produk LIKE ? ORDER BY pr.tanggal_produksi DESC";
+        } else if (kolom.equals("tanggal_produksi")) {
+            sql = "SELECT * FROM produksi WHERE tanggal_produksi LIKE ? ORDER BY tanggal_produksi DESC";
+        } else {
             throw new IllegalArgumentException("Kolom pencarian tidak valid: " + kolom);
         }
 
-        String sql = "SELECT * FROM produksi WHERE " + kolom + " LIKE ?";
         try (Connection conn = koneksi.getKoneksi();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -173,7 +177,7 @@ public class ProduksiController {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Pencarian Gagal: " + e.getMessage(), e);
+            throw new RuntimeException("Pencarian gagal: " + e.getMessage(), e);
         }
         return list;
     }

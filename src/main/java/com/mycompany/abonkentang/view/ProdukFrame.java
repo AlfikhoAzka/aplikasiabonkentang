@@ -115,7 +115,7 @@ public class ProdukFrame extends javax.swing.JFrame {
         tblProduk = new com.mycompany.abonkentang.components.Table();
         txtHargaJual = new javax.swing.JTextField();
         jLabel6 = new com.mycompany.abonkentang.components.Label();
-        cmbSatuan = new javax.swing.JComboBox<>();
+        cmbSatuan = new com.mycompany.abonkentang.components.ComboBox<>();
         jPanel1 = new com.mycompany.abonkentang.components.CardPanel();
         lblDataProduk = new com.mycompany.abonkentang.components.TitleLabel();
         btnKembali = new com.mycompany.abonkentang.components.Button();

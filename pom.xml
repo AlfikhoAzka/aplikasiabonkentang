@@ -33,6 +33,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>26</maven.compiler.release>
-        <exec.mainClass>com.mycompany.abonkentang.Abonkentang</exec.mainClass>
+        <exec.mainClass>com.mycompany.abonkentang.view.LoginFrame</exec.mainClass>
     </properties>
 </project>

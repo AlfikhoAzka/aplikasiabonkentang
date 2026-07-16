@@ -7,6 +7,7 @@ package com.mycompany.abonkentang.view;
 import com.mycompany.abonkentang.config.koneksi;
 import com.mycompany.abonkentang.controller.ProduksiController;
 import com.mycompany.abonkentang.model.Produksi;
+import com.mycompany.abonkentang.model.BahanBaku;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.sql.Connection;
@@ -116,6 +117,50 @@ public class ProduksiFrame extends javax.swing.JFrame {
     private String namaProduk(int idProduk) {
         String label = petaProdukById.get(idProduk);
         return label != null ? label : "(Produk dengan ID " + idProduk + " tidak ditemukan)";
+    }
+    
+    private Map<Integer, Double> pilihBahanBaku() {
+        List<BahanBaku> daftarBahan = controller.daftarBahanBaku();
+        Map<Integer, Double> hasil = new LinkedHashMap<>();
+
+        if (daftarBahan.isEmpty()) {
+            return hasil;
+        }
+
+        while (true) {
+            javax.swing.JComboBox<BahanBaku> cboBahan = new javax.swing.JComboBox<>(daftarBahan.toArray(new BahanBaku[0]));
+            javax.swing.JTextField txtJumlah = new javax.swing.JTextField();
+
+            Object[] isi = { "Bahan baku:", cboBahan, "Jumlah dipakai:", txtJumlah };
+
+            int pilihan = JOptionPane.showConfirmDialog(this, isi,
+                "Bahan Baku yang Dipakai (opsional)", JOptionPane.OK_CANCEL_OPTION);
+
+            if (pilihan != JOptionPane.OK_OPTION) {
+                break;
+            }
+
+            try {
+                double jumlah = Double.parseDouble(txtJumlah.getText().trim());
+                if (jumlah <= 0) {
+                    JOptionPane.showMessageDialog(this, "Jumlah harus lebih besar dari 0!");
+                    continue;
+                }
+                BahanBaku bb = (BahanBaku) cboBahan.getSelectedItem();
+                hasil.merge(bb.getIdBahan(), jumlah, Double::sum);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Jumlah harus berupa angka!");
+                continue;
+            }
+
+            int lagi = JOptionPane.showConfirmDialog(this,
+                "Tambah bahan baku lain?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (lagi != JOptionPane.YES_OPTION) {
+                break;
+            }
+        }
+
+        return hasil;
     }
 
     private void pilihProduk() {
@@ -589,7 +634,8 @@ public class ProduksiFrame extends javax.swing.JFrame {
                 p.setTanggalProduksi(
                     dateFormat.parse(txtTanggal.getText()));
 
-                controller.tambahProduksi(p);
+                Map<Integer, Double> bahanDipakai = pilihBahanBaku();
+                controller.tambahProduksi(p, bahanDipakai);
 
                 JOptionPane.showMessageDialog(this,
                     "Data produksi berhasil ditambahkan.");
@@ -629,7 +675,8 @@ public class ProduksiFrame extends javax.swing.JFrame {
                 p.setTanggalProduksi(
                     dateFormat.parse(txtTanggal.getText()));
 
-                controller.ubahProduksi(p);
+                Map<Integer, Double> bahanDipakai = pilihBahanBaku();
+                controller.ubahProduksi(p, bahanDipakai);
 
                 JOptionPane.showMessageDialog(this,
                     "Data produksi berhasil diubah.");

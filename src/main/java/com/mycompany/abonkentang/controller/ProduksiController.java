@@ -6,9 +6,11 @@ package com.mycompany.abonkentang.controller;
 
 import com.mycompany.abonkentang.config.koneksi;
 import com.mycompany.abonkentang.model.Produksi;
+import com.mycompany.abonkentang.model.BahanBaku;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,32 +18,42 @@ import java.util.List;
  */
 public class ProduksiController {
 
-    public void tambahProduksi(Produksi p) {
+    public void tambahProduksi(Produksi p, Map<Integer, Double> bahanDipakai) {
         String sqlInsert = "INSERT INTO produksi (id_produk, jumlah_produksi, tanggal_produksi) VALUES (?, ?, ?)";
 
         try (Connection conn = koneksi.getKoneksi()) {
             conn.setAutoCommit(false);
-            try {
-                try (PreparedStatement ps = conn.prepareStatement(sqlInsert)) {
-                    ps.setInt(1, p.getIdProduk());
-                    ps.setInt(2, p.getJumlahProduksi());
-                    ps.setDate(3, new java.sql.Date(p.getTanggalProduksi().getTime()));
-                    ps.executeUpdate();
+        try {
+            int idProduksiBaru;
+            try (PreparedStatement ps = conn.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setInt(1, p.getIdProduk());
+                ps.setInt(2, p.getJumlahProduksi());
+                ps.setDate(3, new java.sql.Date(p.getTanggalProduksi().getTime()));
+                ps.executeUpdate();
+
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (!rs.next()) {
+                        throw new SQLException("Gagal mengambil ID produksi baru.");
+                    }
+                    idProduksiBaru = rs.getInt(1);
                 }
-
-                tambahStokProduk(conn, p.getIdProduk(), p.getJumlahProduksi());
-
-                conn.commit();
-            } catch (SQLException e) {
-                conn.rollback();
-                throw new RuntimeException("Gagal Tambah Data: " + e.getMessage(), e);
-            } finally {
-                conn.setAutoCommit(true);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Gagal terhubung ke database: " + e.getMessage(), e);
+
+            konsumsiBahanBaku(conn, idProduksiBaru, bahanDipakai);
+
+            tambahStokProduk(conn, p.getIdProduk(), p.getJumlahProduksi());
+
+                    conn.commit();
+                } catch (SQLException e) {
+                    conn.rollback();
+                    throw new RuntimeException("Gagal Tambah Data: " + e.getMessage(), e);
+                } finally {
+                    conn.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException("Gagal terhubung ke database: " + e.getMessage(), e);
+            }
         }
-    }
 
     public List<Produksi> tampilProduksi() {
         List<Produksi> list = new ArrayList<>();
@@ -65,7 +77,7 @@ public class ProduksiController {
         return list;
     }
 
-    public void ubahProduksi(Produksi p) {
+    public void ubahProduksi(Produksi p, Map<Integer, Double> bahanDipakai) {
         String sqlAmbilLama = "SELECT id_produk, jumlah_produksi FROM produksi WHERE id_produksi = ?";
         String sqlUpdate = "UPDATE produksi SET id_produk=?, jumlah_produksi=?, tanggal_produksi=? WHERE id_produksi=?";
 
@@ -92,6 +104,9 @@ public class ProduksiController {
                     ps.setInt(4, p.getIdProduksi());
                     ps.executeUpdate();
                 }
+
+                batalkanKonsumsiBahanBaku(conn, p.getIdProduksi());
+                konsumsiBahanBaku(conn, p.getIdProduksi(), bahanDipakai);
 
                 tambahStokProduk(conn, idProdukLama, -jumlahLama);
                 tambahStokProduk(conn, p.getIdProduk(), p.getJumlahProduksi());
@@ -128,6 +143,8 @@ public class ProduksiController {
                     }
                 }
 
+                batalkanKonsumsiBahanBaku(conn, idProduksi);
+
                 try (PreparedStatement ps = conn.prepareStatement(sqlDelete)) {
                     ps.setInt(1, idProduksi);
                     ps.executeUpdate();
@@ -145,6 +162,102 @@ public class ProduksiController {
         } catch (SQLException e) {
             throw new RuntimeException("Gagal terhubung ke database: " + e.getMessage(), e);
         }
+    }
+    
+    private void konsumsiBahanBaku(Connection conn, int idProduksi, Map<Integer, Double> bahanDipakai) throws SQLException {
+        if (bahanDipakai == null || bahanDipakai.isEmpty()) {
+            return;
+        }
+
+        for (Map.Entry<Integer, Double> entry : bahanDipakai.entrySet()) {
+            int idBahan = entry.getKey();
+            double dibutuhkan = entry.getValue();
+
+            String sqlCek = "SELECT stok_bahan, nama_bahan FROM bahan_baku WHERE id_bahan = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sqlCek)) {
+                ps.setInt(1, idBahan);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) {
+                        throw new SQLException("Bahan baku dengan ID " + idBahan + " tidak ditemukan.");
+                    }
+                    double stokTersedia = rs.getDouble("stok_bahan");
+                    if (stokTersedia < dibutuhkan) {
+                        throw new SQLException("Stok bahan '" + rs.getString("nama_bahan")
+                            + "' tidak cukup. Dibutuhkan " + dibutuhkan + ", tersedia " + stokTersedia + ".");
+                    }
+                }
+            }
+        }
+
+        String sqlDetail = "INSERT INTO detail_produksi_bahan (id_produksi, id_bahan, jumlah_dipakai) VALUES (?, ?, ?)";
+        String sqlKurangi = "UPDATE bahan_baku SET stok_bahan = stok_bahan - ? WHERE id_bahan = ?";
+
+        for (Map.Entry<Integer, Double> entry : bahanDipakai.entrySet()) {
+            int idBahan = entry.getKey();
+            double dibutuhkan = entry.getValue();
+
+            try (PreparedStatement ps = conn.prepareStatement(sqlDetail)) {
+                ps.setInt(1, idProduksi);
+                ps.setInt(2, idBahan);
+                ps.setDouble(3, dibutuhkan);
+                ps.executeUpdate();
+            }
+            try (PreparedStatement ps = conn.prepareStatement(sqlKurangi)) {
+                ps.setDouble(1, dibutuhkan);
+                ps.setInt(2, idBahan);
+                ps.executeUpdate();
+            }
+        }
+    }
+
+    private void batalkanKonsumsiBahanBaku(Connection conn, int idProduksi) throws SQLException {
+        String sqlAmbil = "SELECT id_bahan, jumlah_dipakai FROM detail_produksi_bahan WHERE id_produksi = ?";
+        List<double[]> pemakaian = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(sqlAmbil)) {
+            ps.setInt(1, idProduksi);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    pemakaian.add(new double[]{ rs.getInt("id_bahan"), rs.getDouble("jumlah_dipakai") });
+                }
+            }
+        }
+
+        String sqlKembalikan = "UPDATE bahan_baku SET stok_bahan = stok_bahan + ? WHERE id_bahan = ?";
+        for (double[] d : pemakaian) {
+            try (PreparedStatement ps = conn.prepareStatement(sqlKembalikan)) {
+                ps.setDouble(1, d[1]);
+                ps.setInt(2, (int) d[0]);
+                ps.executeUpdate();
+            }
+        }
+
+        String sqlHapusDetail = "DELETE FROM detail_produksi_bahan WHERE id_produksi = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sqlHapusDetail)) {
+            ps.setInt(1, idProduksi);
+            ps.executeUpdate();
+        }
+    }
+
+    public List<BahanBaku> daftarBahanBaku() {
+        List<BahanBaku> list = new ArrayList<>();
+        String sql = "SELECT * FROM bahan_baku ORDER BY nama_bahan";
+        try (Connection conn = koneksi.getKoneksi();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
+                list.add(new BahanBaku(
+                    rs.getInt("id_bahan"),
+                    rs.getString("nama_bahan"),
+                    rs.getString("satuan"),
+                    rs.getDouble("stok_bahan"),
+                    rs.getDouble("harga_satuan")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Gagal memuat data bahan baku: " + e.getMessage(), e);
+        }
+        return list;
     }
 
     public List<Produksi> cariProduksi(String keyword, String kolom) {

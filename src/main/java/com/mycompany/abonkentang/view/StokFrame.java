@@ -39,6 +39,22 @@ public StokFrame() {
         tblStok.setSelectionBackground(new java.awt.Color(51,51,51));
         tblStok.getTableHeader().setFont(
                 new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+
+        txtCari.addActionListener(this::txtCariActionPerformed);
+        txtCari.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (txtCari.getText().equals("Cari")) {
+                    txtCari.setText("");
+                }
+            }
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (txtCari.getText().trim().isEmpty()) {
+                    txtCari.setText("Cari");
+                }
+            }
+        });
     }
     private void tableWidth() {
         tblStok.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -121,6 +137,7 @@ public StokFrame() {
 
         txtCari.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCari.setText("Cari");
+        txtCari.addActionListener(this::txtCariActionPerformed);
 
         tblStok.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -187,7 +204,45 @@ public StokFrame() {
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
         tampilData();
+        txtCari.setText("Cari");
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
+        // TODO add your handling code here:
+        String keyword = txtCari.getText().trim();
+
+        if (keyword.isEmpty() || keyword.equals("Cari")) {
+            tampilData();
+            return;
+        }
+
+        try {
+            List<Stok> hasil = controller.cariStok(keyword);
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("ID");
+            model.addColumn("Nama Produk");
+            model.addColumn("Satuan");
+            model.addColumn("Stok Saat Ini");
+            model.addColumn("Update Terakhir");
+
+            for (Stok s : hasil) {
+                model.addRow(new Object[]{
+                    s.getIdStok(),
+                    s.getNamaProduk(),
+                    s.getSatuan(),
+                    s.getJumlahStok(),
+                    formatTanggal.format(s.getTanggalUpdate())
+                });
+            }
+
+            tblStok.setModel(model);
+            tableWidth();
+
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_txtCariActionPerformed
 
     /**
      * @param args the command line arguments

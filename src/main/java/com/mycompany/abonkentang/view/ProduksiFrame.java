@@ -414,16 +414,23 @@ public class ProduksiFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblProduksi);
 
+        btnKembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/angle-left.png"))); // NOI18N
         btnKembali.setText("Kembali");
         btnKembali.setToolTipText("");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
         btnHapus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/trash.png"))); // NOI18N
         btnHapus.setText("Hapus");
+        btnHapus.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnHapus.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnHapus.addActionListener(this::btnHapusActionPerformed);
 
         btnBersih.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnBersih.setText("Bersih");
+        btnBersih.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/minus.png"))); // NOI18N
+        btnBersih.setText("Kosongkan");
+        btnBersih.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBersih.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnBersih.addActionListener(this::btnBersihActionPerformed);
 
         jPanel2.setBackground(new java.awt.Color(17, 46, 129));
@@ -454,6 +461,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
         btnCariProdukisi.addActionListener(this::btnCariProdukisiActionPerformed);
 
         btnRefresh.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
         btnRefresh.setText("Refresh");
         btnRefresh.addActionListener(this::btnRefreshActionPerformed);
 
@@ -473,7 +481,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
                                 .addComponent(txtIdProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblJumlahProduksi)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                                 .addComponent(txtIdJumlahProduksi, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblTanggal)
@@ -497,10 +505,10 @@ public class ProduksiFrame extends javax.swing.JFrame {
                         .addComponent(btnCariProdukisi))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnHapus)
-                    .addComponent(btnBersih)
-                    .addComponent(btnRefresh))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBersih, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRefresh)
+                    .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(42, 42, 42))
         );
         layout.setVerticalGroup(

@@ -132,6 +132,7 @@ public StokFrame() {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
+        btnKembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/angle-left.png"))); // NOI18N
         btnKembali.setText("Kembali");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
 

@@ -101,11 +101,10 @@ public class MainFrame extends javax.swing.JFrame {
         cardPanel1 = new com.mycompany.abonkentang.components.CardPanel();
         lblTitle = new com.mycompany.abonkentang.components.TitleLabel();
         lblSelamatDatang = new com.mycompany.abonkentang.components.Label();
+        btnLogout = new com.mycompany.abonkentang.components.Button();
         jPanel1 = new com.mycompany.abonkentang.components.CardPanel();
         jPanel2 = new com.mycompany.abonkentang.components.CardPanel();
         jPanel3 = new com.mycompany.abonkentang.components.CardPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        menuLogout = new javax.swing.JMenu();
 
         menuLaporanPenjualan.setText("Laporan Penjualan");
         menuLaporanPenjualan.addActionListener(this::menuLaporanPenjualanActionPerformed);
@@ -160,17 +159,30 @@ public class MainFrame extends javax.swing.JFrame {
         lblSelamatDatang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSelamatDatang.setText("Selamat Datang");
 
+        btnLogout.setBackground(new java.awt.Color(40, 40, 130));
+        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogout.setText("Logout");
+        btnLogout.setMaximumSize(new java.awt.Dimension(78, 27));
+        btnLogout.setMinimumSize(new java.awt.Dimension(78, 27));
+        btnLogout.addActionListener(this::btnLogoutActionPerformed);
+
         javax.swing.GroupLayout cardPanel1Layout = new javax.swing.GroupLayout(cardPanel1);
         cardPanel1.setLayout(cardPanel1Layout);
         cardPanel1Layout.setHorizontalGroup(
             cardPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
             .addComponent(lblSelamatDatang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         cardPanel1Layout.setVerticalGroup(
             cardPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblSelamatDatang)
@@ -209,12 +221,6 @@ public class MainFrame extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        menuLogout.setText("Logout");
-        menuLogout.addActionListener(this::menuLogoutActionPerformed);
-        jMenuBar1.add(menuLogout);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -325,7 +331,7 @@ public class MainFrame extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnStokActionPerformed
 
-    private void menuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLogoutActionPerformed
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(
             this,
@@ -339,7 +345,7 @@ public class MainFrame extends javax.swing.JFrame {
             new LoginFrame().setVisible(true);
             this.dispose();
         }
-    }//GEN-LAST:event_menuLogoutActionPerformed
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -369,12 +375,12 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBahanBaku;
     private javax.swing.JButton btnLaporan;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnProduk;
     private javax.swing.JButton btnProduksi;
     private javax.swing.JButton btnStok;
     private javax.swing.JButton btnTransaksi;
     private com.mycompany.abonkentang.components.CardPanel cardPanel1;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -383,6 +389,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JMenuItem menuLaporanPenjualan;
     private javax.swing.JMenuItem menuLaporanProduksi;
-    private javax.swing.JMenu menuLogout;
     // End of variables declaration//GEN-END:variables
 }

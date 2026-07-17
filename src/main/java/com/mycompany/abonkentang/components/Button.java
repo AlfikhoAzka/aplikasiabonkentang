@@ -22,9 +22,12 @@ public class Button extends JButton {
         setFocusPainted(false);
         setOpaque(false);
         
+        this.putClientProperty("Nimbus.Overrides", new javax.swing.UIDefaults());
+        this.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
+        
         setFont(new Font("Segoe UI", Font.BOLD, 12));
         setBackground(new Color(86, 86, 86));
-        setBackground(Color.WHITE);
+        setForeground(Color.WHITE);
     }
 
     @Override

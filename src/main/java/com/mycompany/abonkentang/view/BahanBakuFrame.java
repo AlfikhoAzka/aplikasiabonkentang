@@ -207,21 +207,34 @@ public class BahanBakuFrame extends javax.swing.JFrame {
         );
 
         btnTambah.setFont(new java.awt.Font("Gadugi", 1, 12)); // NOI18N
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
         btnTambah.setText("Tambah");
+        btnTambah.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnTambah.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnTambah.addActionListener(this::btnTambahActionPerformed);
 
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/trash.png"))); // NOI18N
         btnHapus.setText("Hapus");
+        btnHapus.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnHapus.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnHapus.addActionListener(this::btnHapusActionPerformed);
 
+        btnUbah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/shuffle.png"))); // NOI18N
         btnUbah.setText("Ubah");
+        btnUbah.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnUbah.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnUbah.addActionListener(this::btnUbahActionPerformed);
 
         btnKosongkan.setFont(new java.awt.Font("Gadugi", 1, 12)); // NOI18N
+        btnKosongkan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/minus.png"))); // NOI18N
         btnKosongkan.setText("Kosongkan");
+        btnKosongkan.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnKosongkan.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnKosongkan.addActionListener(this::btnKosongkanActionPerformed);
 
         btnKembali.setBackground(new java.awt.Color(102, 102, 102));
         btnKembali.setFont(new java.awt.Font("Gadugi", 1, 12)); // NOI18N
+        btnKembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/angle-left.png"))); // NOI18N
         btnKembali.setText("Kembali");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
@@ -232,9 +245,11 @@ public class BahanBakuFrame extends javax.swing.JFrame {
         txtCari.addActionListener(this::txtCariActionPerformed);
 
         btnCari.setText("Cari");
+        btnCari.setPreferredSize(new java.awt.Dimension(76, 37));
         btnCari.addActionListener(this::btnCariActionPerformed);
 
         btnClear.setText("Clear");
+        btnClear.setPreferredSize(new java.awt.Dimension(76, 37));
         btnClear.addActionListener(this::btnClearActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -245,9 +260,9 @@ public class BahanBakuFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCari)
+                .addComponent(btnCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(btnClear)
+                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
@@ -256,8 +271,8 @@ public class BahanBakuFrame extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCari)
-                    .addComponent(btnClear))
+                    .addComponent(btnCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -313,14 +328,15 @@ public class BahanBakuFrame extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(panelInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnKosongkan, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addGap(16, 16, 16))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnTambah, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                                    .addComponent(btnKosongkan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE))))
+                .addGap(26, 26, 26))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 77, 1146, 440));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 77, 1146, 470));
 
         panelTabel.setBackground(new java.awt.Color(17, 46, 129));
 

@@ -22,8 +22,8 @@ public class Button extends JButton {
         setFocusPainted(false);
         setOpaque(false);
         
-        // Desain
-        setFont(new Font("Segoe UI", Font.BOLD, 12)); 
+        setFont(new Font("Segoe UI", Font.BOLD, 12));
+        setBackground(new Color(86, 86, 86));
         setBackground(Color.WHITE);
     }
 
@@ -42,18 +42,9 @@ public class Button extends JButton {
             g2.setColor(getBackground());
         }
 
-        g2.fillRoundRect(
-            0,
-            0,
-            getWidth(),
-            getHeight(),
-            15,
-            15
-        );
-
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
         g2.dispose();
 
-        // gambar teks saja
         super.paintComponent(g);
     }
 }

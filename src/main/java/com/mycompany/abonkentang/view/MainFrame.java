@@ -115,22 +115,41 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnBahanBaku.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/recipe.png"))); // NOI18N
         btnBahanBaku.setText("Bahan Baku");
+        btnBahanBaku.setToolTipText("");
+        btnBahanBaku.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBahanBaku.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnBahanBaku.addActionListener(this::btnBahanBakuActionPerformed);
 
+        btnProduk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/box-open.png"))); // NOI18N
         btnProduk.setText("Produk");
+        btnProduk.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnProduk.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnProduk.addActionListener(this::btnProdukActionPerformed);
 
+        btnProduksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/utensils.png"))); // NOI18N
         btnProduksi.setText("Produksi");
+        btnProduksi.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnProduksi.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnProduksi.addActionListener(this::btnProduksiActionPerformed);
 
+        btnTransaksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/receipt (1).png"))); // NOI18N
         btnTransaksi.setText("Transaksi");
+        btnTransaksi.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnTransaksi.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnTransaksi.addActionListener(this::btnTransaksiActionPerformed);
 
+        btnStok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/bars-sort.png"))); // NOI18N
         btnStok.setText("Stok");
+        btnStok.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnStok.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnStok.addActionListener(this::btnStokActionPerformed);
 
+        btnLaporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analytics.png"))); // NOI18N
         btnLaporan.setText("Laporan");
+        btnLaporan.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLaporan.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLaporan.addActionListener(this::btnLaporanActionPerformed);
 
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

@@ -103,7 +103,13 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnBahanBaku">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/recipe.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Bahan Baku"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+        <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBahanBakuActionPerformed"/>
@@ -114,7 +120,12 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnProduk">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/box-open.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Produk"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+        <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProdukActionPerformed"/>
@@ -125,7 +136,12 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnProduksi">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/utensils.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Produksi"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+        <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProduksiActionPerformed"/>
@@ -136,7 +152,12 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnTransaksi">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/receipt (1).png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Transaksi"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+        <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTransaksiActionPerformed"/>
@@ -147,7 +168,12 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnStok">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/bars-sort.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Stok"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+        <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStokActionPerformed"/>
@@ -158,7 +184,12 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnLaporan">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/analytics.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Laporan"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+        <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaporanActionPerformed"/>

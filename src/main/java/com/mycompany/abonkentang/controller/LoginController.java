@@ -43,4 +43,37 @@ public class LoginController {
         }
         return user;
     }
+    
+    public boolean isUsernameTersedia(String username) {
+        String sql = "SELECT id_user FROM user WHERE username = ?";
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                return !rs.next();
+            }
+        } catch (Exception e) {
+            System.out.println("Gagal cek username: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean daftar(String username, String password, String role) {
+    String namaLengkap = username;
+        if (!isUsernameTersedia(username)) {
+            return false;
+        }
+        String sql = "INSERT INTO user (username, password, nama_lengkap, role) VALUES (?, ?, ?, ?)";
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setString(3, namaLengkap);
+            ps.setString(4, role);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Gagal daftar: " + e.getMessage());
+            return false;
+        }
+    }
 }

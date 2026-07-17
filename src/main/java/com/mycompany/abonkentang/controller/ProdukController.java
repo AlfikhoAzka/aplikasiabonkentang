@@ -138,5 +138,20 @@ public class ProdukController {
         }
         return list;
     }
+    
+    public int hitungTotalProduk() {
+        String sql = "SELECT COUNT(*) AS total FROM produk";
+        try (Connection conn = koneksi.getKoneksi();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal menghitung total produk: " + e.getMessage());
+        }
+        return 0;
+    }
 
 }

@@ -97,4 +97,24 @@ public class StokController {
 
         return list;
     }
+   
+    private static final int BATAS_STOK_MENIPIS = 10;
+
+    public int hitungStokMenipis() {
+        String sql = "SELECT COUNT(*) AS total FROM stok_produk WHERE jumlah_stok < ?";
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, BATAS_STOK_MENIPIS);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Gagal menghitung stok menipis: " + e.getMessage());
+        }
+        return 0;
+    }
 }

@@ -83,13 +83,13 @@
                   <Component id="btnProduk" alignment="3" min="-2" pref="76" max="-2" attributes="0"/>
                   <Component id="btnProduksi" alignment="3" min="-2" pref="76" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTransaksi" alignment="3" min="-2" pref="76" max="-2" attributes="0"/>
                   <Component id="btnStok" alignment="3" min="-2" pref="76" max="-2" attributes="0"/>
                   <Component id="btnLaporan" alignment="3" min="-2" pref="76" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jPanel1" max="32767" attributes="0"/>
                   <Component id="jPanel2" max="32767" attributes="0"/>
@@ -172,11 +172,8 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="lblTitle" alignment="0" max="32767" attributes="0"/>
-              <Group type="102" alignment="1" attributes="0">
-                  <Component id="lblSelamatDatang" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="352" max="-2" attributes="0"/>
-              </Group>
+              <Component id="lblTitle" alignment="0" pref="789" max="32767" attributes="0"/>
+              <Component id="lblSelamatDatang" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -203,6 +200,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblSelamatDatang">
           <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Selamat Datang"/>
           </Properties>
           <AuxValues>

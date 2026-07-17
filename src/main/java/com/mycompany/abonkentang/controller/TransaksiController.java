@@ -159,4 +159,19 @@ public class TransaksiController {
             throw new RuntimeException("Gagal terhubung ke database: " + e.getMessage(), e);
         }
     }
+    
+    public double hitungPenjualanHariIni() {
+        String sql = "SELECT COALESCE(SUM(total_bayar), 0) AS total FROM transaksi WHERE DATE(tanggal) = CURDATE()";
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getDouble("total");
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal menghitung penjualan hari ini: " + e.getMessage());
+        }
+        return 0;
+    }
 }

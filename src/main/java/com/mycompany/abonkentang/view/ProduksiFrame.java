@@ -556,7 +556,7 @@ public class ProduksiFrame extends javax.swing.JFrame {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
-                if (idProduksiTerpilih == -1) {
+        if (idProduksiTerpilih == -1) {
             JOptionPane.showMessageDialog(this,
                     "Pilih data yang ingin dihapus!");
             return;
@@ -570,13 +570,19 @@ public class ProduksiFrame extends javax.swing.JFrame {
 
         if (konfirmasi == JOptionPane.YES_OPTION) {
 
-            controller.hapusProduksi(idProduksiTerpilih);
+            try {
+                controller.hapusProduksi(idProduksiTerpilih);
 
-            JOptionPane.showMessageDialog(this,
-                    "Data produksi berhasil dihapus.");
+                JOptionPane.showMessageDialog(this,
+                        "Data produksi berhasil dihapus.");
 
-            loadData();
-            bersihForm();
+                loadData();
+                bersihForm();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                        "Gagal menghapus data: " + e.getMessage());
+            }
         }
     }//GEN-LAST:event_btnHapusActionPerformed
 

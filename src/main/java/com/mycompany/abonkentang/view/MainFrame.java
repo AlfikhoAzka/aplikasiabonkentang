@@ -105,7 +105,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2 = new com.mycompany.abonkentang.components.CardPanel();
         jPanel3 = new com.mycompany.abonkentang.components.CardPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuLogout = new javax.swing.JMenu();
 
         menuLaporanPenjualan.setText("Laporan Penjualan");
         menuLaporanPenjualan.addActionListener(this::menuLaporanPenjualanActionPerformed);
@@ -210,8 +210,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Logout");
-        jMenuBar1.add(jMenu1);
+        menuLogout.setText("Logout");
+        menuLogout.addActionListener(this::menuLogoutActionPerformed);
+        jMenuBar1.add(menuLogout);
 
         setJMenuBar(jMenuBar1);
 
@@ -324,6 +325,22 @@ public class MainFrame extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnStokActionPerformed
 
+    private void menuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLogoutActionPerformed
+        // TODO add your handling code here:
+        int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Yakin ingin logout?",
+            "Konfirmasi Logout",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+
+        if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+            com.mycompany.abonkentang.config.Sesi.logout();
+            new LoginFrame().setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_menuLogoutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -357,7 +374,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnStok;
     private javax.swing.JButton btnTransaksi;
     private com.mycompany.abonkentang.components.CardPanel cardPanel1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -367,5 +383,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JMenuItem menuLaporanPenjualan;
     private javax.swing.JMenuItem menuLaporanProduksi;
+    private javax.swing.JMenu menuLogout;
     // End of variables declaration//GEN-END:variables
 }

@@ -104,6 +104,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1 = new com.mycompany.abonkentang.components.CardPanel();
         jPanel2 = new com.mycompany.abonkentang.components.CardPanel();
         jPanel3 = new com.mycompany.abonkentang.components.CardPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
 
         menuLaporanPenjualan.setText("Laporan Penjualan");
         menuLaporanPenjualan.addActionListener(this::menuLaporanPenjualanActionPerformed);
@@ -208,6 +210,11 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jMenu1.setText("Logout");
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -250,7 +257,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -350,6 +357,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnStok;
     private javax.swing.JButton btnTransaksi;
     private com.mycompany.abonkentang.components.CardPanel cardPanel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -3,6 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.abonkentang.view;
+import com.mycompany.abonkentang.config.Sesi;
+import com.mycompany.abonkentang.controller.ProdukController;
+import com.mycompany.abonkentang.controller.StokController;
+import com.mycompany.abonkentang.controller.TransaksiController;
+import java.text.DecimalFormat;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
 
 /**
  *
@@ -11,6 +20,10 @@ package com.mycompany.abonkentang.view;
 public class MainFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
+    private final ProdukController produkController = new ProdukController();
+    private final StokController stokController = new StokController();
+    private final TransaksiController transaksiController = new TransaksiController();
+    private final DecimalFormat formatRupiah = new DecimalFormat("#,##0");
 
     /**
      * Creates new form MainFrame
@@ -18,7 +31,54 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         getContentPane().setBackground(new java.awt.Color(51,51,51));
+        tampilkanStatistik();
+        tampilkanNamaUser();
     }
+    
+    private JLabel buatKartu(javax.swing.JPanel panel, String judul, String nilaiAwal) {
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setPreferredSize(new java.awt.Dimension(160, 90));
+
+        JLabel lblJudul = new JLabel(judul);
+        lblJudul.setForeground(new Color(220, 220, 220));
+        lblJudul.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblJudul.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+
+        JLabel lblNilai = new JLabel(nilaiAwal);
+        lblNilai.setForeground(Color.WHITE);
+        lblNilai.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblNilai.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+
+        panel.add(javax.swing.Box.createVerticalGlue());
+        panel.add(lblJudul);
+        panel.add(javax.swing.Box.createVerticalStrut(4));
+        panel.add(lblNilai);
+        panel.add(javax.swing.Box.createVerticalGlue());
+
+        return lblNilai;
+    }
+
+    private void tampilkanStatistik() {
+        JLabel lblTotalProduk = buatKartu(jPanel1, "Total Produk", "0");
+        JLabel lblStokMenipis = buatKartu(jPanel2, "Stok Menipis", "0");
+        JLabel lblPenjualan = buatKartu(jPanel3, "Penjualan Hari Ini", "Rp 0");
+
+        lblTotalProduk.setText(String.valueOf(produkController.hitungTotalProduk()));
+        lblStokMenipis.setText(String.valueOf(stokController.hitungStokMenipis()));
+        lblPenjualan.setText("Rp " + formatRupiah.format(transaksiController.hitungPenjualanHariIni()));
+    }
+    
+    private void tampilkanNamaUser() {
+    if (Sesi.getUser() != null) {
+        String nama = Sesi.getUser().getNamaLengkap();
+        if (nama == null || nama.trim().isEmpty()) {
+            nama = Sesi.getUser().getUsername();
+        }
+        lblSelamatDatang.setText("Selamat Datang, " + nama);
+    } else {
+        lblSelamatDatang.setText("Selamat Datang");
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,16 +136,15 @@ public class MainFrame extends javax.swing.JFrame {
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Sistem Pengelolaan Abon Kentang");
 
+        lblSelamatDatang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSelamatDatang.setText("Selamat Datang");
 
         javax.swing.GroupLayout cardPanel1Layout = new javax.swing.GroupLayout(cardPanel1);
         cardPanel1.setLayout(cardPanel1Layout);
         cardPanel1Layout.setHorizontalGroup(
             cardPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardPanel1Layout.createSequentialGroup()
-                .addComponent(lblSelamatDatang)
-                .addGap(352, 352, 352))
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(lblSelamatDatang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         cardPanel1Layout.setVerticalGroup(
             cardPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,12 +221,12 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(btnBahanBaku, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProduksi, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnStok, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

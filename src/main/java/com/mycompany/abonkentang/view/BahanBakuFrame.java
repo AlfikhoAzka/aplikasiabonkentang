@@ -220,7 +220,7 @@ public class BahanBakuFrame extends javax.swing.JFrame {
         btnHapus.addActionListener(this::btnHapusActionPerformed);
 
         btnUbah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/shuffle.png"))); // NOI18N
-        btnUbah.setText("Ubah");
+        btnUbah.setText("Edit");
         btnUbah.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnUbah.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnUbah.addActionListener(this::btnUbahActionPerformed);

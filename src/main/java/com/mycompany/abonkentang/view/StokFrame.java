@@ -153,6 +153,7 @@ public StokFrame() {
         ));
         jScrollPane1.setViewportView(tblStok);
 
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
         btnRefresh.setText("Refresh");
         btnRefresh.addActionListener(this::btnRefreshActionPerformed);
 
@@ -170,8 +171,8 @@ public StokFrame() {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(195, 195, 195)
                                 .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(163, 163, 163)
-                                .addComponent(btnRefresh))
+                                .addGap(145, 145, 145)
+                                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(80, 80, 80))
                     .addGroup(layout.createSequentialGroup()
@@ -185,12 +186,12 @@ public StokFrame() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRefresh))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCari)
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                .addGap(0, 61, Short.MAX_VALUE))
+                .addGap(61, 61, 61))
         );
 
         pack();

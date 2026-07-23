@@ -26,8 +26,7 @@ public class LaporanController {
         String sql =
                 "SELECT pr.tanggal_produksi, " +
                 "p.nama_produk, " +
-                "pr.jumlah_produksi, " +
-                "pr.keterangan " +
+                "pr.jumlah_produksi " +
                 "FROM produksi pr " +
                 "JOIN produk p ON pr.id_produk = p.id_produk " +
                 "ORDER BY pr.tanggal_produksi";
@@ -43,7 +42,6 @@ public class LaporanController {
                 lp.setTanggalProduksi(rs.getDate("tanggal_produksi"));
                 lp.setNamaProduk(rs.getString("nama_produk"));
                 lp.setJumlahProduksi(rs.getInt("jumlah_produksi"));
-                lp.setKeterangan(rs.getString("keterangan"));
 
                 list.add(lp);
             }

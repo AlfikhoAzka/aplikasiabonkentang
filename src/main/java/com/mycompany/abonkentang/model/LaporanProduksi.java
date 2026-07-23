@@ -14,7 +14,6 @@ public class LaporanProduksi {
     private Date tanggalProduksi;
     private String namaProduk;
     private int jumlahProduksi;
-    private String keterangan;
 
     public Date getTanggalProduksi() {
         return tanggalProduksi;
@@ -38,13 +37,5 @@ public class LaporanProduksi {
 
     public void setJumlahProduksi(int jumlahProduksi) {
         this.jumlahProduksi = jumlahProduksi;
-    }
-
-    public String getKeterangan() {
-        return keterangan;
-    }
-
-    public void setKeterangan(String keterangan) {
-        this.keterangan = keterangan;
     }
 }

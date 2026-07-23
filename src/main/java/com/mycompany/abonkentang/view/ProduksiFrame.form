@@ -36,7 +36,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblJumlahProduksi" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="56" max="32767" attributes="0"/>
+                              <EmptySpace pref="68" max="32767" attributes="0"/>
                               <Component id="txtIdJumlahProduksi" min="-2" pref="173" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -54,27 +54,27 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnKembali" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnKembali" min="-2" pref="107" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="txtCariProduksi" min="-2" pref="190" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cmbKolomCariProduksi" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnCariProdukisi" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnCariProdukisi" min="-2" pref="88" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" min="-2" pref="421" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnBersih" max="32767" attributes="0"/>
-                  <Component id="btnRefresh" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnHapus" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="btnRefresh" pref="111" max="32767" attributes="0"/>
+                  <Component id="btnHapus" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btnBersih" alignment="1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -84,9 +84,9 @@
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                       <Component id="btnBersih" min="-2" pref="64" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnHapus" min="-2" pref="64" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnRefresh" min="-2" pref="64" max="-2" attributes="0"/>
@@ -94,9 +94,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtCariProduksi" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbKolomCariProduksi" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnCariProdukisi" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCariProduksi" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="cmbKolomCariProduksi" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="btnCariProdukisi" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="324" max="-2" attributes="0"/>
@@ -119,14 +119,14 @@
                           <Component id="lblTanggal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtTanggal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnTambah" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnEdit" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnTambah" pref="36" max="32767" attributes="0"/>
+                          <Component id="btnEdit" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -136,6 +136,9 @@
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/shuffle.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Edit"/>
       </Properties>
@@ -166,6 +169,9 @@
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/add.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Tambah"/>
       </Properties>

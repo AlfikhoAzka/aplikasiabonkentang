@@ -53,7 +53,6 @@ public class LaporanProduksiFrame extends javax.swing.JFrame {
         tblLaporan.getColumnModel().getColumn(0).setPreferredWidth(90);
         tblLaporan.getColumnModel().getColumn(1).setPreferredWidth(200);
         tblLaporan.getColumnModel().getColumn(2).setPreferredWidth(110);
-        tblLaporan.getColumnModel().getColumn(3).setPreferredWidth(180);
     }
 
     private void tampilData() {
@@ -68,7 +67,6 @@ public class LaporanProduksiFrame extends javax.swing.JFrame {
         model.addColumn("Tanggal Produksi");
         model.addColumn("Nama Produk");
         model.addColumn("Jumlah Produksi");
-        model.addColumn("Keterangan");
 
         List<LaporanProduksi> daftarLaporan = controller.getLaporanProduksi();
 
@@ -80,7 +78,6 @@ public class LaporanProduksiFrame extends javax.swing.JFrame {
                 formatTanggal.format(lp.getTanggalProduksi()),
                 lp.getNamaProduk(),
                 lp.getJumlahProduksi(),
-                lp.getKeterangan() == null ? "-" : lp.getKeterangan()
             });
 
             totalJumlah += lp.getJumlahProduksi();
@@ -132,22 +129,24 @@ public class LaporanProduksiFrame extends javax.swing.JFrame {
 
         tblLaporan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3"
             }
         ));
         jScrollPane1.setViewportView(tblLaporan);
 
         lblTotal.setText("Total Jumlah Produksi:");
 
+        btnKembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/angle-left.png"))); // NOI18N
         btnKembali.setText("Kembali");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refresh.png"))); // NOI18N
         btnRefresh.setText("Refresh");
         btnRefresh.addActionListener(this::btnRefreshActionPerformed);
 
@@ -165,11 +164,11 @@ public class LaporanProduksiFrame extends javax.swing.JFrame {
                     .addComponent(lblTotal)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnKembali)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnRefresh)
+                            .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnExport))
+                            .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1022, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(62, 62, 62))
         );
@@ -178,15 +177,15 @@ public class LaporanProduksiFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnKembali)
-                    .addComponent(btnRefresh)
-                    .addComponent(btnExport))
-                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnKembali, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTotal)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,11 +223,11 @@ public class LaporanProduksiFrame extends javax.swing.JFrame {
             document.add(judul);
             document.add(new Paragraph(" "));
  
-            PdfPTable tabel = new PdfPTable(4);
+            PdfPTable tabel = new PdfPTable(3);
             tabel.setWidthPercentage(100);
  
             Font fontHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 11);
-            String[] header = {"Tanggal Produksi", "Nama Produk", "Jumlah Produksi", "Keterangan"};
+            String[] header = {"Tanggal Produksi", "Nama Produk", "Jumlah Produksi"};
             for (String h : header) {
                 tabel.addCell(new PdfPCell(new Phrase(h, fontHeader)));
             }

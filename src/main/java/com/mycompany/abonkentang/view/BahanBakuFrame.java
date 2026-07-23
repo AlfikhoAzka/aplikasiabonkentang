@@ -56,9 +56,10 @@ public class BahanBakuFrame extends javax.swing.JFrame {
     tblBahanBaku.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
 
     tblBahanBaku.getColumnModel().getColumn(0).setPreferredWidth(40);
-    tblBahanBaku.getColumnModel().getColumn(1).setPreferredWidth(220);
+    tblBahanBaku.getColumnModel().getColumn(1).setPreferredWidth(180);
     tblBahanBaku.getColumnModel().getColumn(2).setPreferredWidth(80);
-    tblBahanBaku.getColumnModel().getColumn(3).setPreferredWidth(70);
+    tblBahanBaku.getColumnModel().getColumn(3).setPreferredWidth(60);
+    tblBahanBaku.getColumnModel().getColumn(4).setPreferredWidth(120);
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -164,25 +165,20 @@ public class BahanBakuFrame extends javax.swing.JFrame {
             .addGroup(panelInputLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInputLayout.createSequentialGroup()
-                        .addComponent(lblStok)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))
-                    .addGroup(panelInputLayout.createSequentialGroup()
-                        .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNamaBahan)
-                            .addComponent(lblSatuan))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNamaBahan)
+                    .addComponent(lblSatuan)
+                    .addComponent(lblHarga)
+                    .addComponent(lblStok))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtStok, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                    .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInputLayout.createSequentialGroup()
                             .addComponent(cmbSatuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNamaBahan, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29))
-                    .addGroup(panelInputLayout.createSequentialGroup()
-                        .addComponent(lblHarga)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))))
+                            .addGap(29, 29, 29))
+                        .addComponent(txtNamaBahan)))
+                .addGap(31, 31, 31))
         );
         panelInputLayout.setVerticalGroup(
             panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

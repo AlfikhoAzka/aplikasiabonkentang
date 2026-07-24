@@ -105,8 +105,12 @@ public class ProdukController {
             int rows = ps.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
-            System.out.println("Gagal menghapus data : " + e.getMessage());
-            return false;
+            if (e.getErrorCode() == 1451) {
+                throw new RuntimeException("Produk ini tidak bisa dihapus karena sudah punya riwayat "
+                    + "transaksi, produksi, atau stok. Produk yang sudah pernah dipakai tidak boleh dihapus "
+                    + "demi menjaga data historis tetap utuh.");
+            }
+            throw new RuntimeException("Gagal menghapus data: " + e.getMessage());
         }
     }
     

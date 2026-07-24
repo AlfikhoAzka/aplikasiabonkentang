@@ -106,6 +106,12 @@ public class ProduksiController {
                     ps.executeUpdate();
                 }
 
+                int stokSaatIni = getStokProduk(conn, idProdukLama);
+                if (stokSaatIni < jumlahLama) {
+                    throw new SQLException("Tidak bisa mengubah data ini karena sebagian produk dari batch produksi ini sudah terjual. "
+                        + "Stok saat ini hanya " + stokSaatIni + ", sedangkan produksi lama ini menghasilkan " + jumlahLama + " unit.");
+                }
+
                 batalkanKonsumsiBahanBaku(conn, p.getIdProduksi());
                 konsumsiBahanBaku(conn, p.getIdProduksi(), bahanDipakai);
 
@@ -142,6 +148,12 @@ public class ProduksiController {
                         idProduk = rs.getInt("id_produk");
                         jumlah = rs.getInt("jumlah_produksi");
                     }
+                }
+
+                int stokSaatIni = getStokProduk(conn, idProduk);
+                if (stokSaatIni < jumlah) {
+                    throw new SQLException("Tidak bisa menghapus data ini karena sebagian produk dari batch produksi ini sudah terjual. "
+                        + "Stok saat ini hanya " + stokSaatIni + ", sedangkan produksi ini menghasilkan " + jumlah + " unit.");
                 }
 
                 batalkanKonsumsiBahanBaku(conn, idProduksi);
@@ -341,6 +353,16 @@ public class ProduksiController {
                 ps.setInt(1, idProduk);
                 ps.setInt(2, delta);
                 ps.executeUpdate();
+            }
+        }
+    }
+    
+    private int getStokProduk(Connection conn, int idProduk) throws SQLException {
+        String sql = "SELECT jumlah_stok FROM stok_produk WHERE id_produk = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idProduk);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getInt("jumlah_stok") : 0;
             }
         }
     }

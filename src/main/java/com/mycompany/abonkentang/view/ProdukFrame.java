@@ -368,10 +368,15 @@ public class ProdukFrame extends javax.swing.JFrame {
             if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
                 String kode = tblProduk.getValueAt(row, 0).toString();
 
-                if (controller.hapusProduk(kode)) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil dihapus");
-                } else {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Gagal menghapus data");
+                try {
+                    if (controller.hapusProduk(kode)) {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil dihapus");
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Gagal menghapus data");
+                    }
+                } catch (RuntimeException e) {
+                    javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+                    return;
                 }
 
                 tampilData();

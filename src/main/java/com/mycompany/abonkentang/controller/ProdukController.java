@@ -170,7 +170,7 @@ public class ProdukController {
                 String kodeTerakhir = rs.getString("kode_produk");
                 String angkaSaja = kodeTerakhir.replaceAll("[^0-9]", "");
                 int nomor = angkaSaja.isEmpty() ? 0 : Integer.parseInt(angkaSaja);
-                return String.format("PRD%03d", nomor + 1);
+                return String.format("P%03d", nomor + 1);
             }
         } catch (SQLException e) {
             System.out.println("Gagal generate kode produk: " + e.getMessage());

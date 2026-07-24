@@ -145,7 +145,7 @@ public class BahanBakuFrame extends javax.swing.JFrame {
         txtStok.addActionListener(this::txtStokActionPerformed);
 
         cmbSatuan.setFont(new java.awt.Font("Gadugi", 1, 12)); // NOI18N
-        cmbSatuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kg", "Liter", "Pcs" }));
+        cmbSatuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kg", "Liter", "Pcs", "Gram" }));
         cmbSatuan.addActionListener(this::cmbSatuanActionPerformed);
 
         lblHarga.setFont(new java.awt.Font("Gadugi", 1, 12)); // NOI18N
@@ -172,12 +172,11 @@ public class BahanBakuFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtStok, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                    .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInputLayout.createSequentialGroup()
-                            .addComponent(cmbSatuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(29, 29, 29))
-                        .addComponent(txtNamaBahan)))
+                    .addComponent(txtHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInputLayout.createSequentialGroup()
+                        .addComponent(cmbSatuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))
+                    .addComponent(txtNamaBahan))
                 .addGap(31, 31, 31))
         );
         panelInputLayout.setVerticalGroup(
@@ -412,7 +411,6 @@ public class BahanBakuFrame extends javax.swing.JFrame {
 
         String harga = tblBahanBaku.getValueAt(selectedRow, 4).toString();
 
-        // kalau tabel menampilkan "Rp 10.000"
         harga = harga.replace("Rp", "")
         .replace(".", "")
         .replace(",", "")
@@ -420,7 +418,6 @@ public class BahanBakuFrame extends javax.swing.JFrame {
 
         txtHarga.setText(harga);
 
-        // Masuk mode edit
         isEditMode = true;
 
         btnTambah.setText("Simpan Perubahan");

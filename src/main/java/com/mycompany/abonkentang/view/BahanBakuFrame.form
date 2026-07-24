@@ -228,14 +228,12 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="txtStok" pref="164" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtHarga" pref="164" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="cmbSatuan" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="txtNamaBahan" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtHarga" pref="164" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="cmbSatuan" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="txtNamaBahan" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="31" pref="31" max="-2" attributes="0"/>
                   </Group>
@@ -319,10 +317,11 @@
                   <Font name="Gadugi" size="12" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
+                  <StringArray count="4">
                     <StringItem index="0" value="Kg"/>
                     <StringItem index="1" value="Liter"/>
                     <StringItem index="2" value="Pcs"/>
+                    <StringItem index="3" value="Gram"/>
                   </StringArray>
                 </Property>
               </Properties>

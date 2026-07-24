@@ -18,7 +18,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Alfikho Azka Dinova - 10125107
  */public class BahanBakuController {
 
-    // Menampilkan semua data ke JTable
     public void tampilData(JTable table) {
         String sql = "SELECT * FROM bahan_baku ORDER BY nama_bahan";
         try (Connection conn = koneksi.getKoneksi();
@@ -50,7 +49,6 @@ import javax.swing.table.DefaultTableModel;
         }
     }
 
-    // Menambah data baru
     public void simpanData(BahanBaku bb) {
         String sql = "INSERT INTO bahan_baku (nama_bahan, satuan, stok_bahan, harga_satuan) "
                 + "VALUES (?, ?, ?, ?)";
@@ -70,7 +68,6 @@ import javax.swing.table.DefaultTableModel;
         }
     }
 
-    // Menghapus data
     public void hapusData(int idBahan) {
         String sql = "DELETE FROM bahan_baku WHERE id_bahan=?";
         try (Connection conn = koneksi.getKoneksi();
@@ -86,7 +83,6 @@ import javax.swing.table.DefaultTableModel;
         }
     }
 
-    // Pencarian berdasarkan nama bahan
     public void cariByNama(JTable table, String keyword) {
         String sql = "SELECT * FROM bahan_baku WHERE nama_bahan LIKE ? ORDER BY nama_bahan";
         try (Connection conn = koneksi.getKoneksi();
@@ -120,7 +116,6 @@ import javax.swing.table.DefaultTableModel;
         }
     }
     
-    // Mengambil satu data berdasarkan ID, dipakai untuk keperluan edit
     public BahanBaku getById(int idBahan) {
         BahanBaku bb = null;
         String sql = "SELECT * FROM bahan_baku WHERE id_bahan = ?";

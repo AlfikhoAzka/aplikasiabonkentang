@@ -50,6 +50,11 @@ import javax.swing.table.DefaultTableModel;
     }
 
     public void simpanData(BahanBaku bb) {
+        if (!isNamaBahanTersedia(bb.getNamaBahan())) {
+            JOptionPane.showMessageDialog(null, "Nama bahan \"" + bb.getNamaBahan() + "\" sudah ada. Silakan cek data atau edit yang sudah ada.");
+            return;
+        }
+
         String sql = "INSERT INTO bahan_baku (nama_bahan, satuan, stok_bahan, harga_satuan) "
                 + "VALUES (?, ?, ?, ?)";
         try (Connection conn = koneksi.getKoneksi();
@@ -169,5 +174,19 @@ import javax.swing.table.DefaultTableModel;
 
         }
 
+    }
+    
+    public boolean isNamaBahanTersedia(String namaBahan) {
+        String sql = "SELECT id_bahan FROM bahan_baku WHERE LOWER(nama_bahan) = LOWER(?)";
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, namaBahan.trim());
+            try (ResultSet rs = ps.executeQuery()) {
+                return !rs.next();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal cek nama bahan: " + e.getMessage());
+            return false;
+        }
     }
 }

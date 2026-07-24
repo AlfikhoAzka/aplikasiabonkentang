@@ -32,7 +32,9 @@ public class ProdukFrame extends javax.swing.JFrame {
         tblProduk.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
         controller = new ProdukController();
         getContentPane().setBackground(new java.awt.Color(51,51,51));
-        tampilData(); 
+        tampilData();
+        txtKodeProduk.setText(controller.generateKodeProduk());
+        txtKodeProduk.setEditable(false);
     }
     
     private void tableWidth() {
@@ -46,7 +48,8 @@ public class ProdukFrame extends javax.swing.JFrame {
 }
     
     private void resetForm() {
-        txtKodeProduk.setText("");
+        txtKodeProduk.setText(controller.generateKodeProduk());
+        txtKodeProduk.setEditable(false);
         txtNamaProduk.setText("");
         txtKategori.setText("");
         cmbSatuan.setSelectedIndex(0);
@@ -406,6 +409,13 @@ public class ProdukFrame extends javax.swing.JFrame {
             return;
         }
 
+        String kodeDikecualikan = isEditMode ? kodeProdukTerpilih : null;
+        if (!controller.isNamaProdukTersedia(nama, kodeDikecualikan)) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Nama produk \"" + nama + "\" sudah terdaftar, gunakan nama lain!");
+            return;
+        }
+
         Produk produk = new Produk();
         produk.setKodeProduk(kode);
         produk.setNamaProduk(nama);
@@ -413,18 +423,19 @@ public class ProdukFrame extends javax.swing.JFrame {
         produk.setSatuan(satuan);
         produk.setHargaJual(harga);
 
-        if (isEditMode) {
-            if (controller.updateProduk(kodeProdukTerpilih, produk)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil diubah");
+        try {
+            if (isEditMode) {
+                if (controller.updateProduk(kodeProdukTerpilih, produk)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil diubah");
+                }
             } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengubah data");
+                if (controller.simpanProduk(produk)) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
+                }
             }
-        } else {
-            if (controller.simpanProduk(produk)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan data");
-            }
+        } catch (RuntimeException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
         }
 
         tampilData();

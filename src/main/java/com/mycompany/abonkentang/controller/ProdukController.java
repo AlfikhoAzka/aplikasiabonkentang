@@ -63,10 +63,10 @@ public class ProdukController {
             return true;
 
         } catch (SQLException e) {
-
-            System.out.println("Gagal menyimpan data : " + e.getMessage());
-
-            return false;
+            if (e.getErrorCode() == 1062) {
+                throw new RuntimeException("Kode atau nama produk ini sudah dipakai produk lain, coba yang lain.");
+            }
+            throw new RuntimeException("Gagal menyimpan data: " + e.getMessage());
         }
     }
 
@@ -87,8 +87,10 @@ public class ProdukController {
             int rows = ps.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
-            System.out.println("Gagal mengubah data : " + e.getMessage());
-            return false;
+            if (e.getErrorCode() == 1062) {
+                throw new RuntimeException("Kode atau nama produk ini sudah dipakai produk lain, coba yang lain.");
+            }
+            throw new RuntimeException("Gagal mengubah data: " + e.getMessage());
         }
     }
 
@@ -152,6 +154,43 @@ public class ProdukController {
             System.out.println("Gagal menghitung total produk: " + e.getMessage());
         }
         return 0;
+    }
+    
+    public String generateKodeProduk() {
+        String sql = "SELECT kode_produk FROM produk ORDER BY id_produk DESC LIMIT 1";
+        try (Connection conn = koneksi.getKoneksi();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
+            if (rs.next()) {
+                String kodeTerakhir = rs.getString("kode_produk");
+                String angkaSaja = kodeTerakhir.replaceAll("[^0-9]", "");
+                int nomor = angkaSaja.isEmpty() ? 0 : Integer.parseInt(angkaSaja);
+                return String.format("PRD%03d", nomor + 1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal generate kode produk: " + e.getMessage());
+        }
+        return "PRD001";
+    }
+    
+    public boolean isNamaProdukTersedia(String namaProduk, String kodeDikecualikan) {
+        String sql = "SELECT id_produk FROM produk WHERE LOWER(nama_produk) = LOWER(?)"
+                + (kodeDikecualikan != null ? " AND kode_produk != ?" : "");
+
+        try (Connection conn = koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, namaProduk);
+            if (kodeDikecualikan != null) {
+                ps.setString(2, kodeDikecualikan);
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                return !rs.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal cek nama produk: " + e.getMessage());
+            return true; // kalau gagal cek, biarin lanjut, biar ke-tangkep di simpanProduk/updateProduk
+        }
     }
 
 }
